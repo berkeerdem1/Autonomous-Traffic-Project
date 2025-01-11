@@ -9,6 +9,9 @@ TagManager:
   - 0
   - ForwardRoad
   - Car
+  - rightLane
+  - leftLane
+  - Target
   layers:
   - Default
   - TransparentFX

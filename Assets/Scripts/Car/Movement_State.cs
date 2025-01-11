@@ -1,4 +1,6 @@
+using Pathfinding;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Movement_State : Car_Base
 {
@@ -10,6 +12,8 @@ public class Movement_State : Car_Base
     public override void fixedUpdateState(Car_State_Machine car)
     {
         car.CarInFrontControl();
+
+        car.Movement();
     }
 
     public override void onCollisionEnter(Car_State_Machine car, Collision2D collision)

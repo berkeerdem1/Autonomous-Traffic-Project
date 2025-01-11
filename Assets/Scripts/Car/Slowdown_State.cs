@@ -7,24 +7,21 @@ public class Slowdown_State : Car_Base
     {
         car.currentShowState = Car_State_Machine.States.slowdown;
 
-        car.AIPath().maxSpeed = 2.7f;
+        car.GetAIPath().maxSpeed = 2.7f;
 
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(2f);
-            car.AIPath().maxSpeed = car.currentSpeed;
+            car.GetAIPath().maxSpeed = car.currentSpeed;
             car.switchState(car.movementState);
         }
     }
 
     public override void fixedUpdateState(Car_State_Machine car)
     {
-        if (car.target != null)
-        {
-            car.AIPath().destination = car.target.position;
-        }
+        car.Movement();
     }
 
     public override void onCollisionEnter(Car_State_Machine car, Collision2D collision)

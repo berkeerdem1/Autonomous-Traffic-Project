@@ -13,8 +13,7 @@ public class Overtaking_State : Car_Base
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(2f);
-            car.AIPath().maxSpeed = car.currentSpeed;
-            car.AIPath().destination = car.target.position;
+            car.GetAIPath().maxSpeed = car.currentSpeed;
             //car.switchState(car.movementState);
         }
     }
@@ -24,7 +23,7 @@ public class Overtaking_State : Car_Base
         car.StartOvertaking();
 
         // Sollama durumunu kontrol et
-        if (car.isOvertaking && car.AIPath().reachedDestination)
+        if (car.isOvertaking && car.GetAIPath().reachedDestination)
         {
             car.EndOvertaking(); // Sollama tamamlandýysa, orijinal hedefe dön
             car.switchState(car.movementState);

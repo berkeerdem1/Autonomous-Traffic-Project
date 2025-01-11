@@ -1,6 +1,7 @@
 using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Car_State_Machine : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class Car_State_Machine : MonoBehaviour
     [Header("STATE CONTROL")]
     public States currentShowState = States.movement; // Eklendi (State'leri inpsectorde gormek icin)
 
-    public List<Transform> rightLanePoints; // Sað þeritteki noktalar
-    public List<Transform> leftLanePoints;  // Sol þeritteki noktalar
-    public Transform target; // Hedef pozisyon
+    [SerializeField] private string _rightLaneTag = "rightLane";
+    [SerializeField] private string _leftLaneTag = "leftLane";
+
+    private List<Transform> rightLanePoints; // Sað þeritteki noktalar
+    private List<Transform> leftLanePoints;  // Sol þeritteki noktalar
+
+    public Transform currentTransform;
+    [SerializeField]  private List<Transform> targets; // Hedef pozisyon
     public float detectionRange = 10f; // Önündeki aracý algýlama mesafesi //
     public List<RoadSegment> roadSegments; // Tüm yol segmentleri
 
@@ -27,24 +33,35 @@ public class Car_State_Machine : MonoBehaviour
     private Transform overtakePoint;  // Sollama hedef noktasý
 
     [Header("COMPONENTS")]
-    private AIPath aiPath;
+    [SerializeField] private AIPath aiPath;
     private Transform currentClosestPoint;
-    private Transform _currentTarget;
+    public Transform _currentTarget;
     private Transform _newTargetPosition;
     private AIDestinationSetter _destinationSetter;
 
 
     private void Awake()
     {
+        UpdateTransformList();
         _destinationSetter = GetComponent<AIDestinationSetter>();
+        aiPath = GetComponent<AIPath>();
+
+        GameObject[] targetWithTag = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach (GameObject obj in targetWithTag)
+        {
+            targets.Add(obj.transform);
+        }
     }
     void Start()
     {
-        aiPath = GetComponent<AIPath>();
-        aiPath.destination = target.position; // AIPath hedefini ayarla
+        //int randomTargetIndex = Random.Range(0, targets.Count);
+        //currentTransform = targets[randomTargetIndex];
+        aiPath.destination = currentTransform.position;
         aiPath.canSearch = true; // Yol aramayý etkinleþtir
 
-        aiPath.destination = AdjustPathToFlow(target).position; // Sað þeritten baþlat
+        //aiPath.orientation = OrientationMode.YAxisForward;
+        //aiPath.destination = AdjustPathToFlow(target).position; // Sað þeritten baþlat
 
         switchState(movementState);
     }
@@ -58,11 +75,54 @@ public class Car_State_Machine : MonoBehaviour
     {
         currentstate.fixedUpdateState(this);
 
-        if (IsTargetInWrongDirection())
+        //if (IsTargetInWrongDirection())
+        //{
+        //    SetCorrectTargetDirection();
+        //}
+    }
+
+    public void Movement()
+    {
+        if (_currentTarget != null)
         {
-            SetCorrectTargetDirection();
+            aiPath.destination = _currentTarget.position;
+        }
+
+    }
+
+    public void UpdateTransformList()
+    {
+        GameObject[] rightLaneWithTag = GameObject.FindGameObjectsWithTag(_rightLaneTag);
+        GameObject[] lefttLaneWithTag = GameObject.FindGameObjectsWithTag(_leftLaneTag);
+
+        foreach (GameObject obj in rightLaneWithTag)
+        {
+            rightLanePoints.Add(obj.transform);
+        }
+
+        foreach (GameObject obj in lefttLaneWithTag)
+        {
+            leftLanePoints.Add(obj.transform);
         }
     }
+
+    //void OnPathComplete(Path p)
+    //{
+    //    // Yolun her bir noktasýný kontrol ederek geriye doðru hareketleri engelleyin
+    //    if (p.vectorPath.Count > 1)
+    //    {
+    //        for (int i = 0; i < p.vectorPath.Count - 1; i++)
+    //        {
+    //            // Eðer bir sonraki nokta, agentýn mevcut konumundan geriye doðru ise, bu noktayý yolun dýþýna çýkarýn
+    //            if (Vector3.Dot(transform.forward, p.vectorPath[i + 1] - p.vectorPath[i]) < 0)
+    //            {
+    //                // Yeni bir yol hesaplayýn
+    //                aiPath.SearchPath();
+    //                return;
+    //            }
+    //        }
+    //    }
+    //}
 
     public void CarInFrontControl()
     {
@@ -75,7 +135,7 @@ public class Car_State_Machine : MonoBehaviour
         int currentIndex = currentLane.IndexOf(closestPoint);
 
         // Hedef noktasýna yakýn olup olmadýðýnýzý kontrol edin
-        float disToTarget = Vector2.Distance(target.position, transform.position);
+        float disToTarget = Vector2.Distance(_currentTarget.position, transform.position);
 
         if (disToTarget <= 1)
         {
@@ -87,16 +147,16 @@ public class Car_State_Machine : MonoBehaviour
                 newIndex = currentLane.Count - 1; // Baþlangýca sar
             }
 
-            target.position = currentLane[newIndex].position;
+            _currentTarget.position = currentLane[newIndex].position;
             isOnRightLane = !isOnRightLane; // Þerit deðiþtir
         }
 
         //var node = AstarPath.active.GetNearest(transform.position).node;
         //node.Walkable = false; // Aracýn geçtiði düðümü "yürümez" yap
 
-        if (target != null)
+        if (_currentTarget != null)
         {
-            aiPath.destination = target.position;
+            aiPath.destination = _currentTarget.position;
         }
 
         // Önündeki aracý kontrol et
@@ -117,7 +177,7 @@ public class Car_State_Machine : MonoBehaviour
 
     bool IsTargetInWrongDirection()
     {
-        Vector3 targetDirection = (target.position - transform.position).normalized;
+        Vector3 targetDirection = (_currentTarget.position - transform.position).normalized;
         Vector3 currentDirection = transform.forward;
 
         // Eðer hedefin yönü, aracýn yönüne tersse
@@ -126,7 +186,7 @@ public class Car_State_Machine : MonoBehaviour
 
     void SetCorrectTargetDirection()
     {
-        Vector3 targetDirection = (target.position - transform.position).normalized;
+        Vector3 targetDirection = (_currentTarget.position - transform.position).normalized;
         float step = aiPath.maxSpeed * Time.deltaTime;  // Adým büyüklüðü
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetDirection), step);
     }
@@ -222,7 +282,12 @@ public class Car_State_Machine : MonoBehaviour
         return Vector3.Dot(direction, currentDirection) > 0; // Akýþ yönüyle ayný mý?
     }
 
-    public AIPath AIPath()
+    public Transform GetTarget()
+    {
+        return _currentTarget;
+    }
+
+    public AIPath GetAIPath()
     {
         return aiPath;
     }

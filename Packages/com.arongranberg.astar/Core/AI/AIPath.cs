@@ -302,8 +302,8 @@ namespace Pathfinding {
 				return;
 			}
 
-			// Release the previous path.
-			if (path != null) path.Release(this);
+            // Release the previous path.
+            if (path != null) path.Release(this);
 
 			// Replace the old path
 			path = p;
@@ -368,6 +368,7 @@ namespace Pathfinding {
 				simulatedPosition = tr.position;
 			}
 			if (updateRotation) simulatedRotation = tr.rotation;
+
 
 			var currentPosition = simulatedPosition;
 
