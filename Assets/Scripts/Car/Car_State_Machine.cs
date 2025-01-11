@@ -17,11 +17,14 @@ public class Car_State_Machine : MonoBehaviour
     public List<Transform> leftLanePoints;  // Sol þeritteki noktalar
     public Transform target; // Hedef pozisyon
     public float detectionRange = 10f; // Önündeki aracý algýlama mesafesi //
+    public List<RoadSegment> roadSegments; // Tüm yol segmentleri
 
     public float currentSpeed;
 
     private bool isChangingLane = false; // Þerit deðiþtirme iþlemi devam ediyor mu?w
     private bool isOnRightLane = true; // Aracýn sað þeritte olup olmadýðýný takip edin
+    public bool isOvertaking = false; // Sollama durumunu kontrol etmek için bayrak
+    private Transform overtakePoint;  // Sollama hedef noktasý
 
     [Header("COMPONENTS")]
     private AIPath aiPath;
@@ -41,7 +44,7 @@ public class Car_State_Machine : MonoBehaviour
         aiPath.destination = target.position; // AIPath hedefini ayarla
         aiPath.canSearch = true; // Yol aramayý etkinleþtir
 
-        aiPath.destination = FindClosestPoint(rightLanePoints).position; // Sað þeritten baþlat
+        aiPath.destination = AdjustPathToFlow(target).position; // Sað þeritten baþlat
 
         switchState(movementState);
     }
@@ -54,6 +57,11 @@ public class Car_State_Machine : MonoBehaviour
     private void FixedUpdate()
     {
         currentstate.fixedUpdateState(this);
+
+        if (IsTargetInWrongDirection())
+        {
+            SetCorrectTargetDirection();
+        }
     }
 
     public void CarInFrontControl()
@@ -98,13 +106,29 @@ public class Car_State_Machine : MonoBehaviour
             isOnRightLane = false;
 
             //switchState(slowdownState);
-            switchState(overTakingState);
+            //switchState(overTakingState);
         }
         else
         {
             isChangingLane = false;
             aiPath.maxSpeed = currentSpeed;
         }
+    }
+
+    bool IsTargetInWrongDirection()
+    {
+        Vector3 targetDirection = (target.position - transform.position).normalized;
+        Vector3 currentDirection = transform.forward;
+
+        // Eðer hedefin yönü, aracýn yönüne tersse
+        return Vector3.Dot(targetDirection, currentDirection) < 0;
+    }
+
+    void SetCorrectTargetDirection()
+    {
+        Vector3 targetDirection = (target.position - transform.position).normalized;
+        float step = aiPath.maxSpeed * Time.deltaTime;  // Adým büyüklüðü
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetDirection), step);
     }
     Transform FindClosestPoint(List<Transform> points)
     {
@@ -146,9 +170,56 @@ public class Car_State_Machine : MonoBehaviour
 
     public void StartOvertaking()
     {
-        // Sollama hedefi oluþturma
-        Vector3 overtakePosition = transform.position + (transform.up * 2f); // Sola kaydýrma
-        aiPath.destination = overtakePosition;
+        isOvertaking = true;
+
+        // Sollama hedef noktasýný bul (sol þerit üzerindeki en yakýn nokta)
+        overtakePoint = FindClosestPoint(leftLanePoints);
+
+        if (overtakePoint != null)
+        {
+            aiPath.destination = overtakePoint.position; // Sollama hedefine yönel
+        }
+    }
+    public void EndOvertaking()
+    {
+        isOvertaking = false;
+
+        // Sað þeritteki en yakýn noktaya dön
+        Transform returnPoint = FindClosestPoint(rightLanePoints);
+
+        if (returnPoint != null)
+        {
+            aiPath.destination = returnPoint.position; // Sað þeride geri dön
+        }
+    }
+
+    Transform AdjustPathToFlow(Transform target)
+    {
+        // Akýþa uygun en yakýn yolu bul
+        RoadSegment closestSegment = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (RoadSegment segment in roadSegments)
+        {
+            if (!segment.oneWay || IsDirectionValid(transform.position, segment))
+            {
+                float distance = Vector3.Distance(transform.position, segment.startPoint.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestSegment = segment;
+                }
+            }
+        }
+
+        return closestSegment != null ? closestSegment.endPoint : target;
+    }
+
+    bool IsDirectionValid(Vector3 currentPosition, RoadSegment segment)
+    {
+        Vector3 direction = (segment.endPoint.position - segment.startPoint.position).normalized;
+        Vector3 currentDirection = (segment.startPoint.position - currentPosition).normalized;
+        return Vector3.Dot(direction, currentDirection) > 0; // Akýþ yönüyle ayný mý?
     }
 
     public AIPath AIPath()
