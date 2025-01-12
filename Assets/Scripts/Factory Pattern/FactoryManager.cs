@@ -16,7 +16,7 @@ public class FactoryManager : MonoBehaviour
         for (int i = 0; i < _spawnPoints.Length; i++)
         {
             _factory = _factories[Random.Range(0, _factories.Length)];
-            _factory.ApllyCarColor(_spawnPoints[i]);
+            _factory.ApllyCarColorandCreate(_spawnPoints[i]);
         }
     }
 }

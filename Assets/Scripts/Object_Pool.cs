@@ -3,6 +3,7 @@ using UnityEngine;
 public class Object_Pool : MonoBehaviour
 {
     public static Object_Pool Instance;
+
     private GameObject[] rightLineWithTag;
     private GameObject[] leftLineWithTag;
     private GameObject[] targets;

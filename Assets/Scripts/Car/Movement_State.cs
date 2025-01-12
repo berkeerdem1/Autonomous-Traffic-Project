@@ -8,15 +8,15 @@ public class Movement_State : Car_Base
     public override void enterState(Car_State_Machine car)
     {
         car.currentShowState = Car_State_Machine.States.movement;
-
-        
+        car.GetAIPath().canMove = true;
     }
 
     public override void fixedUpdateState(Car_State_Machine car)
     {
         car.CarInFrontControl();
-
+        car.ChangeTarget();
         car.Movement();
+        car.DriverStateControl();
     }
 
     public override void onCollisionEnter(Car_State_Machine car, Collision2D collision)

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5272027707638240335}
   - component: {fileID: 2490894089623112761}
   - component: {fileID: 3468344008568621848}
+  - component: {fileID: -4219603483589621160}
+  - component: {fileID: 1953151723942726041}
   m_Layer: 0
   m_Name: Orange Car Parent
   m_TagString: Car
@@ -93,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
-  radius: 0.89
+  radius: 0.7
   height: 1
   canMove: 1
   maxSpeed: 5
@@ -141,30 +143,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentShowState: 0
   currentDrivertype: 1
-  roadSegments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  detectionRange: 10
-  currentSpeed: 8
+  detectionRange: 15
+  _currentSpeed: 6
+  _slowDownSpeed: 0.5
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
   isOvertaking: 0
+  slowDownDuration: 2
   currentTarget: {fileID: 0}
+  aiPath: {fileID: 0}
 --- !u!114 &3468344008568621848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +167,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 1, g: 0.5609787, b: 0, a: 0}
   _material: {fileID: 2100000, guid: fcf59a39d922f5b408fb9de922c1ee34, type: 2}
+--- !u!114 &-4219603483589621160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530172037160061835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1953151723942726041
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530172037160061835}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &2656389635696496290
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +565,7 @@ GameObject:
   - component: {fileID: 2656389635696935282}
   - component: {fileID: 2656389635693557802}
   - component: {fileID: 2656389635694580234}
-  - component: {fileID: 1519969790616063403}
+  - component: {fileID: 7334144337349796597}
   m_Layer: 0
   m_Name: Car_2_Purple
   m_TagString: Car
@@ -555,7 +582,7 @@ Transform:
   m_GameObject: {fileID: 2656389635696750736}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000016054887, y: -0.6785157, z: -0.000000014829432, w: 0.73458594}
-  m_LocalPosition: {x: -0.08, y: 0.76, z: 1.86}
+  m_LocalPosition: {x: 0.1, y: 0.76, z: 1.73}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -620,8 +647,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1519969790616063403
-MeshCollider:
+--- !u!136 &7334144337349796597
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -638,7 +665,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d857dc8da4a0e2b4088a55b525d92cc8, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.008031425
+  m_Height: 0.05265219
+  m_Direction: 0
+  m_Center: {x: 0.000042407504, y: -0.00037417767, z: -0.0010866201}

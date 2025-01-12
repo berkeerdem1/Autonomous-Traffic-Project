@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class Road
 {
-    public Transform target; // Yolun hedefi //
-    public List<Transform> cars; // Yoldaki arabalarýn listesi
+    public Transform target; 
+    public List<Transform> cars; 
 }
 
 public class GameManager : MonoBehaviour

@@ -7,13 +7,12 @@ public class Overtaking_State : Car_Base
     public override void enterState(Car_State_Machine car)
     {
         car.currentShowState = Car_State_Machine.States.overtaking;
-
+        car._currentSpeed = 6;
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(2f);
-            car.GetAIPath().maxSpeed = car.currentSpeed;
             //car.switchState(car.movementState);
         }
     }

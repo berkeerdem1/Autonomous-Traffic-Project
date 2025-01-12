@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 659810622526702738}
   - component: {fileID: 5999093381431040064}
   - component: {fileID: 2237109059237185265}
+  - component: {fileID: 8582804005803017438}
+  - component: {fileID: 1656982798518286001}
   m_Layer: 0
   m_Name: Police Car Parent
   m_TagString: Car
@@ -93,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
-  radius: 1.01
+  radius: 0.7
   height: 1
   canMove: 1
   maxSpeed: 3
@@ -141,30 +143,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentShowState: 0
   currentDrivertype: 1
-  roadSegments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  detectionRange: 10
-  currentSpeed: 7
+  detectionRange: 15
+  _currentSpeed: 6
+  _slowDownSpeed: 0.5
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
   isOvertaking: 0
+  slowDownDuration: 2
   currentTarget: {fileID: 0}
+  aiPath: {fileID: 0}
 --- !u!114 &2237109059237185265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +167,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0, g: 0.19112825, b: 1, a: 0}
   _material: {fileID: 2100000, guid: 4add69fc6d74a5946ae4c9a81ed429ef, type: 2}
+--- !u!114 &8582804005803017438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175431673566823530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1656982798518286001
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175431673566823530}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7578836181551355441
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +313,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300008, guid: 72127dfd2b4ece84fafa67f6eee23e99, type: 3}
 --- !u!1 &7578836181551355443
@@ -300,7 +327,7 @@ GameObject:
   - component: {fileID: 7578836181550926355}
   - component: {fileID: 7578836181548059187}
   - component: {fileID: 7578836181549156595}
-  - component: {fileID: 7578836181553461395}
+  - component: {fileID: 5566649579024652951}
   m_Layer: 0
   m_Name: Policecar
   m_TagString: Car
@@ -317,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 7578836181551355443}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000015538932, y: -0.7032138, z: -0.000000015369228, w: 0.7109785}
-  m_LocalPosition: {x: 0.03, y: 0.77, z: 1.22}
+  m_LocalPosition: {x: 0.03, y: 0.77, z: 1.4}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -382,8 +409,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7578836181553461395
-MeshCollider:
+--- !u!136 &5566649579024652951
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -400,10 +427,11 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 72127dfd2b4ece84fafa67f6eee23e99, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.008525407
+  m_Height: 0.04964575
+  m_Direction: 0
+  m_Center: {x: 0.0021826006, y: -0.00016131758, z: 0.0003887141}
 --- !u!1 &7578836181551355445
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +539,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 72127dfd2b4ece84fafa67f6eee23e99, type: 3}
 --- !u!1 &7578836181551355447
@@ -621,7 +649,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 72127dfd2b4ece84fafa67f6eee23e99, type: 3}
 --- !u!1 &7578836181551355451
@@ -731,6 +759,6 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 72127dfd2b4ece84fafa67f6eee23e99, type: 3}

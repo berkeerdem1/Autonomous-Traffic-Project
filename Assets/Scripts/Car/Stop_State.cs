@@ -1,27 +1,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class Slowdown_State : Car_Base
+public class Stop_State : Car_Base
 {
     public override void enterState(Car_State_Machine car)
     {
-        car.currentShowState = Car_State_Machine.States.slowdown;
-
-        car.GetAIPath().maxSpeed = 2.7f;
-
+        car.currentShowState = Car_State_Machine.States.stop;
+        car._currentSpeed = 0f;
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
-            yield return new WaitForSeconds(2f);
-            car.GetAIPath().maxSpeed = car.currentSpeed;
-            car.switchState(car.movementState);
+            yield return new WaitForSeconds(3f);
+            car.switchState(car.overTakingState);
         }
     }
 
     public override void fixedUpdateState(Car_State_Machine car)
     {
-        car.Movement();
+        if (!car.IsCarInFront())
+            car.switchState(car.movementState);
     }
 
     public override void onCollisionEnter(Car_State_Machine car, Collision2D collision)

@@ -14,7 +14,7 @@ public class Wait_State : Car_Base
             yield return new WaitForSeconds(3f);
 
             car.GetAIPath().destination = car.currentTarget.position;
-            car.GetAIPath().canSearch = true; // Yol aramayý etkinleþtir
+            car.GetAIPath().canSearch = true;
             car.switchState(car.movementState);
         }
     }

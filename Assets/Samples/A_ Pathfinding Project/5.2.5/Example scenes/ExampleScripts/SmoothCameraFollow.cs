@@ -18,7 +18,7 @@ namespace Pathfinding.Examples {
 		public float rotationDamping = 10.0f;
 		public bool staticOffset = false;
         public float sprintMultiplier = 2.0f;
-        public float moveSpeed = 10.0f; // W, A, S, D Momement speed
+        public float moveSpeed = 10.0f; // W, A, S, D Movement speed
         public float rotationSpeed = 100.0f;
         public bool isFreeMode = false;
         /// <summary>
@@ -39,10 +39,6 @@ namespace Pathfinding.Examples {
             {
                 int randomIndex = UnityEngine.Random.Range(0, cars.Length);
                 target = cars[randomIndex].transform;
-            }
-            else
-            {
-                Debug.LogWarning("Sahnede 'car' tagine sahip obje bulunamadý.");
             }
         }
         void Update()
@@ -81,7 +77,6 @@ namespace Pathfinding.Examples {
                     {
                         target = hit.collider.transform;
                         SetTarget(target);
-                        Debug.Log($"Yeni hedef: {target.name}");
                     }
                 }
             }

@@ -3,9 +3,9 @@ using UnityEngine;
 public class CarFactory : Factory
 {
     [SerializeField] private Car _redCarPrefab;
-    public override ICar ApllyCarColor(Transform pos)
+    public override ICar ApllyCarColorandCreate(Transform pos)
     {
-        GameObject redCarInstane = Instantiate(_redCarPrefab.gameObject, pos.position, Quaternion.identity);
+        GameObject redCarInstane = Instantiate(_redCarPrefab.gameObject, pos.position, pos.rotation);
         Car newCar = redCarInstane.GetComponent<Car>();
 
         newCar.Color();

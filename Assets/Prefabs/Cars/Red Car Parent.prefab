@@ -107,7 +107,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 80492071631ffe442bdaacf7b2e4a9f3, type: 3}
 --- !u!1 &256250377750143240
@@ -217,7 +217,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300008, guid: 80492071631ffe442bdaacf7b2e4a9f3, type: 3}
 --- !u!1 &256250377750143242
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 256250377750248746}
   - component: {fileID: 256250377751018762}
   - component: {fileID: 256250377752149962}
-  - component: {fileID: 256250377748041642}
+  - component: {fileID: 1688792329568081154}
   m_Layer: 0
   m_Name: Car 4
   m_TagString: Car
@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 256250377750143242}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000016329594, y: -0.6646497, z: -0.0000000145263845, w: 0.74715513}
-  m_LocalPosition: {x: 0.01, y: 1.31, z: 1.92}
+  m_LocalPosition: {x: 0.22, y: 1.31, z: 1.64}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -313,8 +313,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &256250377748041642
-MeshCollider:
+--- !u!136 &1688792329568081154
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -331,10 +331,11 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 80492071631ffe442bdaacf7b2e4a9f3, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.010804461
+  m_Height: 0.049751338
+  m_Direction: 0
+  m_Center: {x: -0.0008986044, y: -0.0018768815, z: 0.000000014303044}
 --- !u!1 &256250377750143244
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +443,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 80492071631ffe442bdaacf7b2e4a9f3, type: 3}
 --- !u!1 &256250377750143246
@@ -552,7 +553,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300006, guid: 80492071631ffe442bdaacf7b2e4a9f3, type: 3}
 --- !u!1 &3197813109959112656
@@ -569,6 +570,8 @@ GameObject:
   - component: {fileID: 4601377674311066456}
   - component: {fileID: 2013653603248383191}
   - component: {fileID: 7995405065811099566}
+  - component: {fileID: -1047397863067943928}
+  - component: {fileID: 3342649645493635343}
   m_Layer: 0
   m_Name: Red Car Parent
   m_TagString: Car
@@ -648,8 +651,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1073741824
-  radius: 1.01
-  height: 2
+  radius: 0.7
+  height: 1
   canMove: 1
   maxSpeed: 5
   gravity: {x: NaN, y: NaN, z: NaN}
@@ -696,30 +699,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentShowState: 0
   currentDrivertype: 1
-  roadSegments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  detectionRange: 10
-  currentSpeed: 3
+  detectionRange: 15
+  _currentSpeed: 6
+  _slowDownSpeed: 0.5
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
   isOvertaking: 0
+  slowDownDuration: 2
   currentTarget: {fileID: 0}
+  aiPath: {fileID: 0}
 --- !u!114 &7995405065811099566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,3 +723,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0.4188679, g: 0.1288216, b: 0.1288216, a: 0}
   _material: {fileID: 2100000, guid: b71b71b0a1f9a48768a27ca6eefcfbdf, type: 2}
+--- !u!114 &-1047397863067943928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197813109959112656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &3342649645493635343
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197813109959112656}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
