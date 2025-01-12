@@ -16,28 +16,29 @@ public class Car_State_Machine : MonoBehaviour
 
     [Header("STATE CONTROL")]
     public States currentShowState = States.movement;
+    public DriverType currentDrivertype = DriverType.normal;
 
-    [SerializeField] private string _rightLaneTag = "rightLane";
-    [SerializeField] private string _leftLaneTag = "leftLane";
-
+    [Header("LISTS")]
+    public List<RoadSegment> roadSegments;
     private List<Transform> rightLanePoints = new List<Transform>(); // Sað þeritteki noktalar
     private List<Transform> leftLanePoints = new List<Transform>();  // Sol þeritteki noktalar
+    private List<Transform> targets = new List<Transform>();
 
-    private List<Transform> targets = new List<Transform>(); 
+    [Header("MOVEMENT SETTINGS")]
     public float detectionRange = 10f; // Önündeki aracý algýlama mesafesi //
-    public List<RoadSegment> roadSegments; // Tüm yol segmentleri
-
     public float currentSpeed;
-
-    private bool isChangingLane = false; // Þerit deðiþtirme iþlemi devam ediyor mu?w
-    private bool isOnRightLane = true; // Aracýn sað þeritte olup olmadýðýný takip edin
-    public bool isOvertaking = false; // Sollama durumunu kontrol etmek için bayrak
-    private Transform overtakePoint;  // Sollama hedef noktasý
+    [SerializeField] private float _angrySpeed = 12f;
+    [SerializeField] private float _normalSpeed = 6f;
+    [SerializeField] private float _chillSpeed = 3f;
+    public bool isOvertaking = false; 
+    private bool isChangingLane = false; 
+    private bool isOnRightLane = true; 
+    private Transform overtakePoint;
 
     [Header("COMPONENTS")]
+    public Transform currentTarget;
     private AIPath aiPath;
     private Transform currentClosestPoint;
-    public Transform currentTarget;
     private Transform _newTargetPosition;
     private AIDestinationSetter _destinationSetter;
 
@@ -54,12 +55,11 @@ public class Car_State_Machine : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayedFind());
-        
-        
 
         //aiPath.orientation = OrientationMode.YAxisForward;
         //aiPath.destination = AdjustPathToFlow(target).position; // Sað þeritten baþlat
-
+        currentSpeed = _normalSpeed;
+        currentDrivertype = DriverType.normal;
         switchState(waitState);
     }
 
@@ -76,6 +76,42 @@ public class Car_State_Machine : MonoBehaviour
         //{
         //    SetCorrectTargetDirection();
         //}
+        DriverStateControl();
+    }
+
+    void DriverStateControl()
+    {
+        switch (currentDrivertype)
+        {
+            case DriverType.angry:
+                currentSpeed = _angrySpeed;
+                aiPath.maxSpeed = currentSpeed;
+                break;
+            case DriverType.normal:
+                currentSpeed = _normalSpeed;
+                aiPath.maxSpeed = currentSpeed;
+                break;
+            case DriverType.chill:
+                currentSpeed = _chillSpeed;
+                aiPath.maxSpeed = currentSpeed;
+                break;
+        }
+    }
+
+    public DriverType Angry()
+    {
+        currentDrivertype = DriverType.angry;
+        return DriverType.angry;
+    }
+    public DriverType Normal()
+    {
+        currentDrivertype = DriverType.normal;
+        return DriverType.normal;
+    }
+    public DriverType Chill()
+    {
+        currentDrivertype = DriverType.chill;
+        return DriverType.chill;
     }
 
     public void Movement()
@@ -330,7 +366,12 @@ public class Car_State_Machine : MonoBehaviour
         overtaking
     } // (States show on inspector)
 
-
+    public enum DriverType
+    {
+        angry,
+        normal,
+        chill
+    }
 
 
     private void OnCollisionEnter2D(Collision2D collision)

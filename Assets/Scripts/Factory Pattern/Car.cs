@@ -4,14 +4,10 @@ public class Car : MonoBehaviour, ICar
 {
     [SerializeField] private Color _color;
 
-    private MeshRenderer _meshRenderer;
+    [SerializeField] private Material _material;
 
-    private void Awake()
-    {
-        _meshRenderer = GetComponentInChildren<MeshRenderer>();
-    }
     public void Color()
     {
-        _meshRenderer.material.color = _color;
+        _material.color = _color;
     }
 }
