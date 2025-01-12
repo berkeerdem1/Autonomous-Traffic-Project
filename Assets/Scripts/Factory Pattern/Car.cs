@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RedCar : MonoBehaviour, ICar
+public class Car : MonoBehaviour, ICar
 {
     [SerializeField] private Color _color;
 

@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         foreach (var car in randomCars)
         {
-            car.GetComponent<Car_State_Machine>().currentTransform = newTarget;
+            car.GetComponent<Car_State_Machine>().currentTarget = newTarget;
         }
     }
 }
