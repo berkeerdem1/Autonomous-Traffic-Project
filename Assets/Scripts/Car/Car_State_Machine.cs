@@ -46,14 +46,12 @@ public class Car_State_Machine : MonoBehaviour
     private Transform _newTargetPosition;
     private Transform overtakePoint;
     private AIDestinationSetter _destinationSetter;
-    private CustomAIPath _customAIPath;
     private Traffic_AI _trafficAI;
 
     private void Awake()
     {
         _destinationSetter = GetComponent<AIDestinationSetter>();
         aiPath = GetComponent<AIPath>();
-        _customAIPath = GetComponent<CustomAIPath>();
         _trafficAI = GetComponent<Traffic_AI>();
     }
     private void OnEnable()
@@ -167,7 +165,6 @@ public class Car_State_Machine : MonoBehaviour
 
         aiPath.destination = FindClosestPoint(rightLanePoints).position;
         aiPath.canSearch = true; 
-        _customAIPath.SetTarget(currentTarget);
 
         if (_trafficAI != null) _trafficAI.SetTarget(currentTarget);
     } // It pulls the necessary references from the ready Object Pool into its lists
@@ -206,9 +203,9 @@ public class Car_State_Machine : MonoBehaviour
         
         if (IsCarInFront())
         {
-            if (distanceToCar < 5f) 
+            if (distanceToCar < 6f) 
             {
-                switchState(stopState);
+                //switchState(stopState);
             }
             else
             {

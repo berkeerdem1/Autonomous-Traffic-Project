@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 23580325}
   m_Layer: 0
   m_Name: Way1 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2221,7 +2221,7 @@ GameObject:
   - component: {fileID: 221830258}
   m_Layer: 0
   m_Name: Junction
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3077,37 +3077,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1883121867}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &284592667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 284592668}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &284592668
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284592667}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 270.946, y: 26.577776, z: 128.3811}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &285095831
 Transform:
@@ -4467,7 +4436,7 @@ GameObject:
   - component: {fileID: 365232523}
   m_Layer: 0
   m_Name: Way2 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6463,7 +6432,7 @@ GameObject:
   - component: {fileID: 510703605}
   m_Layer: 0
   m_Name: Way2 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9641,7 +9610,7 @@ GameObject:
   - component: {fileID: 736073341}
   m_Layer: 0
   m_Name: Way1 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10990,7 +10959,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 1
-  maxFrameTime: 1
+  maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
   navmeshUpdates:
@@ -15632,7 +15601,7 @@ GameObject:
   - component: {fileID: 1085196691}
   m_Layer: 0
   m_Name: 'Way3 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17695,7 +17664,7 @@ GameObject:
   - component: {fileID: 1210988216}
   m_Layer: 0
   m_Name: Way2 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20508,7 +20477,7 @@ GameObject:
   - component: {fileID: 1379738290}
   m_Layer: 0
   m_Name: 'Way3 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21117,7 +21086,7 @@ GameObject:
   - component: {fileID: 1408620434}
   m_Layer: 0
   m_Name: 'Way3 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25119,7 +25088,7 @@ GameObject:
   - component: {fileID: 1593595573}
   m_Layer: 0
   m_Name: Way1 Segments
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29638,7 +29607,7 @@ GameObject:
   - component: {fileID: 1781893226}
   m_Layer: 0
   m_Name: 'Way4 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35813,7 +35782,7 @@ GameObject:
   - component: {fileID: 2037847149}
   m_Layer: 0
   m_Name: 'Way4 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37633,7 +37602,7 @@ GameObject:
   - component: {fileID: 2116977517}
   m_Layer: 0
   m_Name: 'Way4 Segments '
-  m_TagString: Untagged
+  m_TagString: RoadSegment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39121,12 +39090,11 @@ SceneRoots:
   - {fileID: 811622057}
   - {fileID: 543263515441855352}
   - {fileID: 410087041}
+  - {fileID: 315021963}
   - {fileID: 832575519}
   - {fileID: 492639193}
-  - {fileID: 224527423}
-  - {fileID: 1034400403}
-  - {fileID: 1766471564}
   - {fileID: 1553472811}
+  - {fileID: 224527423}
+  - {fileID: 1766471564}
   - {fileID: 2082879657}
-  - {fileID: 315021963}
-  - {fileID: 284592668}
+  - {fileID: 1034400403}

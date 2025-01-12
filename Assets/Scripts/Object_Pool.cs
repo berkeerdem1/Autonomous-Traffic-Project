@@ -7,6 +7,7 @@ public class Object_Pool : MonoBehaviour
     private GameObject[] rightLineWithTag;
     private GameObject[] leftLineWithTag;
     private GameObject[] targets;
+    private GameObject[] roadSegments;
     private void Awake()
     {
         if (Instance == null)
@@ -21,12 +22,14 @@ public class Object_Pool : MonoBehaviour
 
         InitializePool("rightLane", "leftLane");
         InitializeTargetsPool("Target");
+        InitializeRoadSegmentsPool("RoadSegment");
     }
 
-    private void Start()
+    public void InitializeRoadSegmentsPool(string tag)
     {
-    }
+        roadSegments = GameObject.FindGameObjectsWithTag(tag);
 
+    }
     public void InitializeTargetsPool(string tag)
     {
         targets = GameObject.FindGameObjectsWithTag(tag);
@@ -65,9 +68,19 @@ public class Object_Pool : MonoBehaviour
     {
         if (targets == null)
         {
-            Debug.LogError("Left lane objects are not initialized!");
+            Debug.LogError("targets objects are not initialized!");
             return null;
         }
         return targets;
+    }
+
+    public GameObject[] GetRoadSegments()
+    {
+        if (roadSegments == null)
+        {
+            Debug.LogError("roadSegments objects are not initialized!");
+            return null;
+        }
+        return roadSegments;
     }
 }

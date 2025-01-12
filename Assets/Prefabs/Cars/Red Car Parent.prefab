@@ -570,8 +570,9 @@ GameObject:
   - component: {fileID: 4601377674311066456}
   - component: {fileID: 2013653603248383191}
   - component: {fileID: 7995405065811099566}
-  - component: {fileID: -1047397863067943928}
   - component: {fileID: 3342649645493635343}
+  - component: {fileID: -479990344437289342}
+  - component: {fileID: 8277056863913450345}
   m_Layer: 0
   m_Name: Red Car Parent
   m_TagString: Car
@@ -723,18 +724,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0.4188679, g: 0.1288216, b: 0.1288216, a: 0}
   _material: {fileID: 2100000, guid: b71b71b0a1f9a48768a27ca6eefcfbdf, type: 2}
---- !u!114 &-1047397863067943928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3197813109959112656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &3342649645493635343
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -762,3 +751,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &-479990344437289342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197813109959112656}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3461071331419b44394959ccbbaefcd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadSegments: []
+--- !u!114 &8277056863913450345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197813109959112656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a11c9e13b945824da5944a367ba9de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSegment: {fileID: 0}
+  learningRate: 0.1
+  discountFactor: 0.9

@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 4834888169732784053}
   - component: {fileID: 282683440393618127}
   - component: {fileID: 1852250899189477988}
-  - component: {fileID: -7549778976348165072}
   - component: {fileID: 2515407454636114779}
+  - component: {fileID: -4031915257116083716}
+  - component: {fileID: 9146720757399124978}
   m_Layer: 0
   m_Name: Gold Car Parent
   m_TagString: Car
@@ -167,18 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0.7791445, g: 0.8113208, b: 0.48220006, a: 0}
   _material: {fileID: 2100000, guid: c2e40fa84d53ccd428f640eac126b1fb, type: 2}
---- !u!114 &-7549778976348165072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3125039707797532379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &2515407454636114779
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -206,6 +195,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-4031915257116083716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125039707797532379}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3461071331419b44394959ccbbaefcd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadSegments: []
+--- !u!114 &9146720757399124978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3125039707797532379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a11c9e13b945824da5944a367ba9de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSegment: {fileID: 0}
+  learningRate: 0.1
+  discountFactor: 0.9
 --- !u!1 &6396134365529772560
 GameObject:
   m_ObjectHideFlags: 0

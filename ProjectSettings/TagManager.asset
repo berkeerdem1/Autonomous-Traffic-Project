@@ -11,6 +11,7 @@ TagManager:
   - rightLane
   - leftLane
   - Target
+  - RoadSegment
   layers:
   - Default
   - TransparentFX

@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 5272027707638240335}
   - component: {fileID: 2490894089623112761}
   - component: {fileID: 3468344008568621848}
-  - component: {fileID: -4219603483589621160}
   - component: {fileID: 1953151723942726041}
+  - component: {fileID: -4315016233278435106}
+  - component: {fileID: -5888675664333759846}
   m_Layer: 0
   m_Name: Orange Car Parent
   m_TagString: Car
@@ -167,18 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 1, g: 0.5609787, b: 0, a: 0}
   _material: {fileID: 2100000, guid: fcf59a39d922f5b408fb9de922c1ee34, type: 2}
---- !u!114 &-4219603483589621160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530172037160061835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9bc71f916b993545a7a0a69571c7d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1953151723942726041
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -206,6 +195,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-4315016233278435106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530172037160061835}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3461071331419b44394959ccbbaefcd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadSegments: []
+--- !u!114 &-5888675664333759846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530172037160061835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a11c9e13b945824da5944a367ba9de6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSegment: {fileID: 0}
+  learningRate: 0.1
+  discountFactor: 0.9
 --- !u!1 &2656389635696496290
 GameObject:
   m_ObjectHideFlags: 0

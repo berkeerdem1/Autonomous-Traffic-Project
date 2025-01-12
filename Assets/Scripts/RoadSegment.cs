@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,5 +28,10 @@ public class RoadSegment : MonoBehaviour
 
         // Eðer araç hedefin ters yönündeyse, geçerli yolda ilerlememesi gerekir
         return Vector3.Dot(directionToTarget, roadDirection) > 0;
+    }
+
+    internal void SetColor(Color color)
+    {
+        throw new NotImplementedException();
     }
 }
