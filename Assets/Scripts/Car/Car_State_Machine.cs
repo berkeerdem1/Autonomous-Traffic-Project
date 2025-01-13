@@ -2,11 +2,11 @@ using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Runtime.ConstrainedExecution;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
+public enum Lane { Right, Left }
 public class Car_State_Machine : MonoBehaviour
 {
     [Header("STATES")]
@@ -16,42 +16,47 @@ public class Car_State_Machine : MonoBehaviour
     public Stop_State stopState = new Stop_State();
     public Overtaking_State overTakingState = new Overtaking_State();
 
-    [Header("STATE CONTROL")]
+    [Header("ENUMS")]
     public States currentShowState = States.movement;
     public DriverType currentDrivertype = DriverType.normal;
+    private Lane currentLane = Lane.Right;
 
     [Header("LISTS")]
-    private List<Transform> rightLanePoints = new List<Transform>(); // Sað þeritteki noktalar
-    private List<Transform> leftLanePoints = new List<Transform>();  // Sol þeritteki noktalar
-    private List<Transform> targets = new List<Transform>();
+    private List<Transform> _rightLanePoints = new List<Transform>();
+    private List<Transform> _leftLanePoints = new List<Transform>();  
+    private List<Transform> _targets = new List<Transform>();
+
 
     [Header("MOVEMENT SETTINGS")]
-    public float detectionRange = 10f; // Önündeki aracý algýlama mesafesi //
-    public float _currentSpeed = 6f;
-    public float _slowDownSpeed = 0.1f;
+    public float detectionRange = 10f; // Car detection distance //
+    public float currentSpeed = 6f;
+    public float slowDownSpeed = 0.1f;
     [SerializeField] private float _angrySpeed = 12f;
     [SerializeField] private float _normalSpeed = 6f;
     [SerializeField] private float _chillSpeed = 3f;
+    [SerializeField] private float _slowDownDuration = 2f;
+    private float _slowDownTimer = 0f;
+    private float _initialSpeed;
+
+
+    [Header("BOOLS")]
     public bool isOvertaking = false; 
-    private bool isChangingLane = false; 
-    private bool isOnRightLane = true;
-    private float distanceToCar;
-    [SerializeField] private float slowDownDuration = 2f;
-    private float slowDownTimer = 0f;
+    private bool _isOnRightLane = true;
+    private float _distanceToCar;
+    private bool _isAngryDriver = false;
+
 
     [Header("COMPONENTS")]
     public Transform currentTarget;
-    public AIPath aiPath;
-    private Transform currentClosestPoint;
-    private Transform _newTargetPosition;
-    private Transform overtakePoint;
+    private AIPath _aiPath;
+    private Transform _overtakePoint;
     private AIDestinationSetter _destinationSetter;
     private Traffic_AI _trafficAI;
 
     private void Awake()
     {
         _destinationSetter = GetComponent<AIDestinationSetter>();
-        aiPath = GetComponent<AIPath>();
+        _aiPath = GetComponent<AIPath>();
         _trafficAI = GetComponent<Traffic_AI>();
     }
     private void OnEnable()
@@ -61,10 +66,8 @@ public class Car_State_Machine : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayedFind());
+        RandomDriver();
 
-        //aiPath.destination = FindClosestPoint(rightLanePoints).position;
-        
-        currentDrivertype = DriverType.normal;
         switchState(waitState);
     }
 
@@ -78,8 +81,16 @@ public class Car_State_Machine : MonoBehaviour
         currentstate.fixedUpdateState(this);
 
         CarInFrontControl();
+        AvoidCollision();
 
-        aiPath.maxSpeed = _currentSpeed;
+        _aiPath.maxSpeed = currentSpeed;
+    }
+
+    void RandomDriver()
+    {
+        DriverType[] drivertypes = (DriverType[])System.Enum.GetValues(typeof(DriverType));
+        int random = UnityEngine.Random.Range(0, drivertypes.Length);
+        currentDrivertype = drivertypes[random];
     }
 
     public void DriverStateControl()
@@ -87,13 +98,18 @@ public class Car_State_Machine : MonoBehaviour
         switch (currentDrivertype)
         {
             case DriverType.angry:
-                if(!IsCarInFront()) _currentSpeed = _angrySpeed;
+                if(!IsCarInFront()) currentSpeed = _angrySpeed;
+                _isAngryDriver = true;
                 break;
+
             case DriverType.normal:
-                if (!IsCarInFront()) _currentSpeed = _normalSpeed;
+                if (!IsCarInFront()) currentSpeed = _normalSpeed;
+                _isAngryDriver = false;
                 break;
+
             case DriverType.chill:
-                if (!IsCarInFront()) _currentSpeed = _chillSpeed;
+                if (!IsCarInFront()) currentSpeed = _chillSpeed;
+                _isAngryDriver = false;
                 break;
         }
     }
@@ -118,7 +134,7 @@ public class Car_State_Machine : MonoBehaviour
     {
         if (currentTarget != null)
         {
-            aiPath.destination = currentTarget.position;
+            _aiPath.destination = currentTarget.position;
         }
     }
 
@@ -132,18 +148,18 @@ public class Car_State_Machine : MonoBehaviour
 
         foreach (GameObject obj in targetWithTag)
         {
-            targets.Add(obj.transform);
+            _targets.Add(obj.transform);
         }
 
-        int randomTargetIndex = UnityEngine.Random.Range(0, targets.Count);
-        currentTarget = targets[randomTargetIndex];
-        aiPath.destination = currentTarget.position;
+        int randomTargetIndex = UnityEngine.Random.Range(0, _targets.Count);
+        currentTarget = _targets[randomTargetIndex];
+        _aiPath.destination = currentTarget.position;
 
         try
         {
             foreach (GameObject obj in rightLaneWithTag)
             {
-                rightLanePoints.Add(obj.transform);
+                _rightLanePoints.Add(obj.transform);
             }
         }
         catch (NullReferenceException ex)
@@ -155,7 +171,7 @@ public class Car_State_Machine : MonoBehaviour
         {
             foreach (GameObject obj in lefttLaneWithTag)
             {
-                leftLanePoints.Add(obj.transform);
+                _leftLanePoints.Add(obj.transform);
             }
         }
         catch (NullReferenceException ex)
@@ -163,15 +179,15 @@ public class Car_State_Machine : MonoBehaviour
             Debug.LogError($"NullReferenceException in left lane: {ex.Message}");
         }
 
-        aiPath.destination = FindClosestPoint(rightLanePoints).position;
-        aiPath.canSearch = true; 
+        _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
+        _aiPath.canSearch = true; 
 
         if (_trafficAI != null) _trafficAI.SetTarget(currentTarget);
     } // It pulls the necessary references from the ready Object Pool into its lists
 
     public void ChangeTarget()
     {
-        List<Transform> currentLane = isOnRightLane ? rightLanePoints : leftLanePoints;
+        List<Transform> currentLane = _isOnRightLane ? _rightLanePoints : _leftLanePoints;
         Transform closestPoint = FindClosestPoint(currentLane);
 
         int currentIndex = currentLane.IndexOf(closestPoint);
@@ -187,64 +203,80 @@ public class Car_State_Machine : MonoBehaviour
             }
 
             currentTarget.position = currentLane[newIndex].position;
-            isOnRightLane = !isOnRightLane; 
+            _isOnRightLane = !_isOnRightLane; 
         }
 
         //var node = AstarPath.active.GetNearest(transform.position).node;
         //node.Walkable = false; 
-    }
+    } // If it reaches the target, move the target back 2 points.
 
     public void CarInFrontControl()
     {
-        if (currentTarget != null)
-        {
-            aiPath.destination = currentTarget.position;
-        }
-        
         if (IsCarInFront())
         {
-            if (distanceToCar < 6f) 
+            if (_distanceToCar < 6f) 
             {
                 //switchState(stopState);
+
+                if(_isAngryDriver)
+                    switchState(overTakingState);
             }
             else
             {
-                if (_currentSpeed > 0.51f)
+                if (currentSpeed > 0.51f)
                 {
-                    _currentSpeed -= 0.05f;
+                    _initialSpeed = currentSpeed;
+                    currentSpeed -= 0.05f;
                 }
             }
-            
-            //switchState(overTakingState);
         }
         else
         {
-            isChangingLane = false;
-            aiPath.maxSpeed = _currentSpeed;
+            if(currentSpeed <= _initialSpeed)
+                currentSpeed += 0.05f;
+
+            _aiPath.maxSpeed = currentSpeed;
             //switchState(movementState);
         }
     }
 
-    public Transform FindClosestPoint(List<Transform> points)
+    private Transform FindClosestPoint(List<Transform> points)
     {
-        Transform closest = null;
+        // Since the transform position information is in the Unity main Thread,
+        // copy the positions to the array beforehand
+        // Prefetches the positions of all points
+        Vector3[] positions = points.Select(p => p.position).ToArray();
+        Vector3 currentPosition = transform.position;
+
+        int closestIndex = -1;
         float minDistance = Mathf.Infinity;
 
-        foreach (Transform point in points)
+        // Splits processes independently and runs
+        // these parts simultaneously on multiple processors
+        // Use parallel processing just for distance calculation
+        System.Threading.Tasks.Parallel.For(0, positions.Length, i =>
         {
-            float distance = Vector3.Distance(transform.position, point.position);
-            if (distance < minDistance)
+            float distance = Vector3.Distance(currentPosition, positions[i]);
+            lock (this)
             {
-                minDistance = distance;
-                closest = point;
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestIndex = i;
+                }
             }
-        }
+        });
 
-        return closest;
-    }
+        return closestIndex >= 0 ? points[closestIndex] : null;
+    }  // Finds the closest point from the Points array in the parameter with parallel processing
+
 
     public bool IsCarInFront()
     {
+        // It sends a raycast from the front point and if 
+        // it touches an object with the 'car' tag, 
+        // it returns true and calculates the distance to the object.
+
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
 
@@ -253,37 +285,57 @@ public class Car_State_Machine : MonoBehaviour
             if (hit.collider.CompareTag("Car"))
             {
                 Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.red);
-                distanceToCar = Vector3.Distance(transform.position, hit.point);
+                _distanceToCar = Vector3.Distance(transform.position, hit.point);
                 return true;
             }
         }
 
         Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.green);
         return false;
+    } 
+
+    private Transform FindAlternativePoint()
+    {
+        List<Transform> alternativePoints = currentLane == Lane.Right ? _leftLanePoints : _rightLanePoints;
+        return FindClosestPoint(alternativePoints);
+    }
+
+    private void AvoidCollision()
+    {
+        if (IsCarInFront())
+        {
+            Transform alternativePoint = FindAlternativePoint();
+
+            if (alternativePoint != null)
+            {
+                _aiPath.destination = alternativePoint.position;
+                currentLane = currentLane == Lane.Right ? Lane.Left : Lane.Right;
+            }
+        }
     }
 
     public void StartOvertaking()
     {
         isOvertaking = true;
 
-        overtakePoint = FindClosestPoint(leftLanePoints);
+        _overtakePoint = FindClosestPoint(_leftLanePoints);
 
-        if (overtakePoint != null)
+        if (_overtakePoint != null)
         {
-            aiPath.destination = overtakePoint.position; 
+            _aiPath.destination = _overtakePoint.position; 
         }
-    }
+    } // Start Overtaking using FindClosestPoint(LeftLanePoints)
     public void EndOvertaking()
     {
         isOvertaking = false;
 
-        Transform returnPoint = FindClosestPoint(rightLanePoints);
+        Transform returnPoint = FindClosestPoint(_rightLanePoints);
 
         if (returnPoint != null)
         {
-            aiPath.destination = returnPoint.position; 
+            _aiPath.destination = returnPoint.position; 
         }
-    }
+    } // End Overtaking using FindClosestPoint(RightLanePoints)
 
     public Transform GetTarget()
     {
@@ -291,11 +343,11 @@ public class Car_State_Machine : MonoBehaviour
     }
     public AIPath GetAIPath()
     {
-        return aiPath;
+        return _aiPath;
     }
     public List<Transform> GetRightLinePoints()
     {
-        return rightLanePoints;
+        return _rightLanePoints;
     }
     public void switchState(Car_Base state) //State change func
     {
@@ -314,7 +366,7 @@ public class Car_State_Machine : MonoBehaviour
         angry,
         normal,
         chill
-    }
+    } // To select and change drive types
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

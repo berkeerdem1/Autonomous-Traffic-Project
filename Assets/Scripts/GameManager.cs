@@ -12,8 +12,8 @@ public class Road
 
 public class GameManager : MonoBehaviour
 {
-    public List<Road> roads; // 4 yolun hedefleri ve arabalarýný tutar
-    public float targetChangeInterval = 30f;
+    public List<Road> roads; // targets and cars of 4 roads
+    public float targetChangeInterval = 120f;
 
     private void Start()
     {
@@ -25,22 +25,17 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(targetChangeInterval);
-
-            // 4 yoldan 2 rastgele yol seç (Bu yollardaki arabalar yönlenecek)
+            
             List<int> selectedRoads = GetTwoRandomRoadIndices();
-
-            // Geriye kalan yollarý bul (Yönlenecek hedefler)
             List<int> remainingRoads = GetRemainingRoadIndices(selectedRoads);
-
-            // Her turda seçilen ve kalan yollarý güncelle ve hedefleri yönlendir
+            
             RedirectCarsToOtherRoads(selectedRoads, remainingRoads);
         }
     }
 
 
-    private List<int> GetTwoRandomRoadIndices()
+    private List<int> GetTwoRandomRoadIndices() // Select 2 random roads with 4 paths (Cars on these roads will be directed)
     {
-
         List<int> indices = new List<int>();
 
         int road1 = Random.Range(0, roads.Count);
@@ -48,6 +43,7 @@ public class GameManager : MonoBehaviour
 
         int road2;
 
+        // If path1 and path2 are not the same, add to list
         do
         {
             road2 = Random.Range(0, roads.Count);
@@ -59,34 +55,34 @@ public class GameManager : MonoBehaviour
         return indices;
     }
 
-    private List<int> GetRemainingRoadIndices(List<int> selectedRoads)
+    private List<int> GetRemainingRoadIndices(List<int> selectedRoads) // Find the remaining paths (Destinations to navigate to)
     {
-        // Geriye kalan yollarý bul
+        // Find the remaining paths
         return roads
             .Select((road, index) => index)
             .Where(index => !selectedRoads.Contains(index))
             .ToList();
     }
 
-    private void RedirectCarsToOtherRoads(List<int> selectedRoads, List<int> remainingRoads)
+    private void RedirectCarsToOtherRoads(List<int> selectedRoads, List<int> remainingRoads) // Update selected and remaining paths and route targets each round
     {
-        // Ýlk seçilen yoldaki arabalar ilk kalan yola yönlendir
+        // Cars on the first selected path will be directed to the first remaining path.
         RedirectCars(selectedRoads[0], remainingRoads[0]);
 
-        // Ýkinci seçilen yoldaki arabalar ikinci kalan yola yönlendir
+        // Cars on the second selected path will be directed to the second remaining path.
         RedirectCars(selectedRoads[1], remainingRoads[1]);
     }
 
     private void RedirectCars(int fromRoad, int toRoad)
     {
         List<Transform> carsOnRoad = roads[fromRoad].cars;
-
-        int carsToRedirect = Mathf.Min(2, carsOnRoad.Count); // Maksimum 2 
+        int carsToRedirect = Mathf.Min(2, carsOnRoad.Count); 
         List<Transform> randomCars = new List<Transform>();
 
         while (randomCars.Count < carsToRedirect)
         {
             int randomIndex = Random.Range(0, carsOnRoad.Count);
+
             if (!randomCars.Contains(carsOnRoad[randomIndex]))
             {
                 randomCars.Add(carsOnRoad[randomIndex]);

@@ -7,13 +7,13 @@ public class Overtaking_State : Car_Base
     public override void enterState(Car_State_Machine car)
     {
         car.currentShowState = Car_State_Machine.States.overtaking;
-        car._currentSpeed = 6;
+        car.currentSpeed = 6;
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
-            yield return new WaitForSeconds(2f);
-            //car.switchState(car.movementState);
+            yield return new WaitForSeconds(6f);
+            car.switchState(car.movementState);
         }
     }
 
@@ -21,10 +21,10 @@ public class Overtaking_State : Car_Base
     {
         car.StartOvertaking();
 
-        // Sollama durumunu kontrol et
+        // Check overtaking status
         if (car.isOvertaking && car.GetAIPath().reachedDestination)
         {
-            car.EndOvertaking(); // Sollama tamamlandýysa, orijinal hedefe dön
+            car.EndOvertaking(); // If overtaking is complete, return to current target
             car.switchState(car.movementState);
             return;
         }

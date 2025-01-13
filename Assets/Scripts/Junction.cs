@@ -5,11 +5,10 @@ using UnityEngine;
 public class Junction : MonoBehaviour
 {
     public List<RoadSegment> connectedRoads;  
-    public bool isClockwise = false;  // Saat yönünde mi, saat yönünün tersine mi?
+    public bool isClockwise = false;
 
     public void InitializeJunction()
     {
-        // Yollarý saatin tersi veya saat yönünde sýralayýn
         if (isClockwise)
         {
             connectedRoads = connectedRoads.OrderBy(road => road.transform.position.x).ToList();

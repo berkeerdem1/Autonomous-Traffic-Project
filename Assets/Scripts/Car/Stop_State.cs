@@ -6,7 +6,7 @@ public class Stop_State : Car_Base
     public override void enterState(Car_State_Machine car)
     {
         car.currentShowState = Car_State_Machine.States.stop;
-        car._currentSpeed = 0f;
+        car.currentSpeed = 0f;
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()

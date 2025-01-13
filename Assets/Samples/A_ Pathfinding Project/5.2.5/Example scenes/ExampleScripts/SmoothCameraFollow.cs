@@ -30,11 +30,12 @@ namespace Pathfinding.Examples {
             StartCoroutine(wait());
         }
 
-        IEnumerator wait() 
+        IEnumerator wait()  // Finds car objects from labels and random selects one as target
         {
             yield return new WaitForSeconds(1f);
 
             GameObject[] cars = GameObject.FindGameObjectsWithTag("Car");
+
             if (cars.Length > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, cars.Length);
@@ -48,6 +49,9 @@ namespace Pathfinding.Examples {
         }
         void LateUpdate () 
         {
+            // If not in free mode, follow the target,
+            // if in free mode, navigate with W,A,S,D / rotations with mouse 
+
             if (isFreeMode)
             {
                 FreeModeControl();
@@ -60,13 +64,13 @@ namespace Pathfinding.Examples {
 
         private void HandleInput()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1)) // Right click Camera mode changes
             {
                 isFreeMode = !isFreeMode;
             }
         }
 
-        private void HandleMouseClick()
+        private void HandleMouseClick() // If you left click on a car, it becomes a new target.
         {
             if (Input.GetMouseButtonDown(0))
             {

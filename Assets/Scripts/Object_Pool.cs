@@ -4,10 +4,11 @@ public class Object_Pool : MonoBehaviour
 {
     public static Object_Pool Instance;
 
-    private GameObject[] rightLineWithTag;
-    private GameObject[] leftLineWithTag;
-    private GameObject[] targets;
-    private GameObject[] roadSegments;
+    private GameObject[] _rightLineWithTag;
+    private GameObject[] _leftLineWithTag;
+    private GameObject[] _targets;
+    private GameObject[] _roadSegments;
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +21,7 @@ public class Object_Pool : MonoBehaviour
             Destroy(gameObject);
         }
 
+        // Finds objects in the scene by tag and adds them to arrays.
         InitializePool("rightLane", "leftLane");
         InitializeTargetsPool("Target");
         InitializeRoadSegmentsPool("RoadSegment");
@@ -27,60 +29,57 @@ public class Object_Pool : MonoBehaviour
 
     public void InitializeRoadSegmentsPool(string tag)
     {
-        roadSegments = GameObject.FindGameObjectsWithTag(tag);
-
+        _roadSegments = GameObject.FindGameObjectsWithTag(tag);
     }
+
     public void InitializeTargetsPool(string tag)
     {
-        targets = GameObject.FindGameObjectsWithTag(tag);
-
+        _targets = GameObject.FindGameObjectsWithTag(tag);
     }
 
     public void InitializePool(string tag1, string tag2)
     {
-        rightLineWithTag = GameObject.FindGameObjectsWithTag(tag1);
-        leftLineWithTag = GameObject.FindGameObjectsWithTag(tag2);
-
-        Debug.Log($"Initialized pool with {rightLineWithTag.Length} right lane objects and {leftLineWithTag.Length} left lane objects.");
+        _rightLineWithTag = GameObject.FindGameObjectsWithTag(tag1);
+        _leftLineWithTag = GameObject.FindGameObjectsWithTag(tag2);
     }
 
     public GameObject[] GetRightLinesWithTag()
     {
-        if (rightLineWithTag == null)
+        if (_rightLineWithTag == null)
         {
             Debug.LogError("Right lane objects are not initialized!");
             return null;
         }
-        return rightLineWithTag;
+        return _rightLineWithTag;
     }
 
     public GameObject[] GeteftLinesWithTag()
     {
-        if (leftLineWithTag == null)
+        if (_leftLineWithTag == null)
         {
             Debug.LogError("Left lane objects are not initialized!");
             return null;
         }
-        return leftLineWithTag;
+        return _leftLineWithTag;
     }
 
     public GameObject[] GetTargets()
     {
-        if (targets == null)
+        if (_targets == null)
         {
             Debug.LogError("targets objects are not initialized!");
             return null;
         }
-        return targets;
+        return _targets;
     }
 
     public GameObject[] GetRoadSegments()
     {
-        if (roadSegments == null)
+        if (_roadSegments == null)
         {
             Debug.LogError("roadSegments objects are not initialized!");
             return null;
         }
-        return roadSegments;
+        return _roadSegments;
     }
 }

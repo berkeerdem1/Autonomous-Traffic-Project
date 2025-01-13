@@ -147,7 +147,7 @@ public class QLearningSystem : MonoBehaviour
 
         if (connectedSegments.Count == 0) return null;
 
-        // ε-greedy stratejisi
+        // ε-greedy strategy
         if (Random.value < epsilon)
         {
             return connectedSegments[Random.Range(0, connectedSegments.Count)];
