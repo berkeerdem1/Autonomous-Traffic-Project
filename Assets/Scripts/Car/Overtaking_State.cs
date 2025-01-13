@@ -7,27 +7,25 @@ public class Overtaking_State : Car_Base
     public override void enterState(Car_State_Machine car)
     {
         car.currentShowState = Car_State_Machine.States.overtaking;
-        car.currentSpeed = 6;
+
+        car.GetAIPath().updateRotation = false;
+        car.transform.LookAt(car._overTakingPos);
+
+        car.StartCoroutine(car.StartOvertaking());
         car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(6f);
+            car.EndOvertaking();
+            car.GetAIPath().updateRotation = true;
             car.switchState(car.movementState);
         }
     }
 
     public override void fixedUpdateState(Car_State_Machine car)
     {
-        car.StartOvertaking();
-
-        // Check overtaking status
-        if (car.isOvertaking && car.GetAIPath().reachedDestination)
-        {
-            car.EndOvertaking(); // If overtaking is complete, return to current target
-            car.switchState(car.movementState);
-            return;
-        }
+        //car.StartOvertaking();
     }
 
     public override void onCollisionEnter(Car_State_Machine car, Collision2D collision)

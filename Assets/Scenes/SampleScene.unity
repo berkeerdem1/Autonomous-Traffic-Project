@@ -10197,6 +10197,51 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &763122601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763122603}
+  - component: {fileID: 763122602}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &763122602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763122601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21446bf7f2aea34786a13a4b62f99ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+--- !u!4 &763122603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763122601}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 283.5182, y: 10.360504, z: 99.21883}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766080607
 GameObject:
   m_ObjectHideFlags: 0
@@ -10894,7 +10939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1073741824
   data:
-    dataString: UEsDBBQAAAgIAAAQIeztAIU7VwEAAEkCAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlUdFSwjAQ/JVOnpVpaAX0GWV8EBnFDziSa7mxTTpJihSGf/dCRer4dJmdzd7u3lE4a4N4SI5iCTXyQ6wsmeDFTSLWXXNGPgyF7tGUZHC0dmB8YV0dCYuP53kkZJBPM5QqxULnCPe3Y1QyTzfjXE8mMJluxInZHsGp7RrKXjNAWaKOMjXs5+QDGBXXyWw0Y7CimtgGO0vEnkfKWPczD3EmUdNBp8DHAAVUHhlpPY7nq23nSfkBHLakPt/+sYfwG2hq4x8ZhVG1ztMuOgquxbNN/9n72UHV4q8H2wT2esAn694bcB4XDprtYInh4OjD0mq85Hzhd6whYrGCsiX9V1ukcpqD3txN09m9ymTBpc64yiyXKHU6zqQ4byc+DkG1QgNVuBRkGzRX42Z42aR3x7B28LWgQ239lUqmsO/KIZrXXuKSwaPjLZxSP2oKnBRDIFPGr+J4EqdvUEsDBBQAAAgIAAAQIeyBoCypbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNUz0jPVUVBKL0osyCgGChiCOKWZKSB2tJKBoblJYkqSqbmBhWWysWGarlGqhZl5krGJYaphioGRsaFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66XkB+Zl6JO8hspdhaAFBLAQItABQAAAgIAAAQIeztAIU7VwEAAEkCAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIeyBoCypbQAAAHgAAAAJACQAAAAAAAAAAAAAAKQBAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAXAIAAAAA
+    dataString: UEsDBBQAAAgIAAAQIewfesoPVwEAAEgCAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlUdFSwjAQ/JVOnpVpaAX0GWV8EBnFDziSa7mxTTpJihSGf/dCRer4dJmdvb3dzVE4a4N4SI5iCTXyQ6wsmeDFTSLWXXNGPgyF7tGUZHC0dmB8YV0dCYuP53kkZJBPM5QqxULnCPe3Y1QyTzfjXE8mMJluxInZHsGp7RrKXjNAWaKOMjXs5+QDGBXPyWw0Y7CimtgGO0vEnkfKWPczD3EmUdNBp8DHAAVUHhlpPY7nq23nSfkBHLakPt/+sYfwG2hq446Mwqha52kXHQXX4tmm/+z97KBq8deDbQJ7PeCTde8NOI8LB832umc4N/qwtBovMV/4HVuIWGygbEn/lRapnOagN3fTdHavMllwpzNuMsslSp2OMynOx4n/hqBaoYEqXPqxDZrB/eHHJr05hrWDrwUdauuvVDKFfVcO0bz2EpeePDq+wiH1o6bAQTEEMmVcFceTOH0DUEsDBBQAAAgIAAAQIeyBoCypbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNUz0jPVUVBKL0osyCgGChiCOKWZKSB2tJKBoblJYkqSqbmBhWWysWGarlGqhZl5krGJYaphioGRsaFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66XkB+Zl6JO8hspdhaAFBLAQItABQAAAgIAAAQIewfesoPVwEAAEgCAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIeyBoCypbQAAAHgAAAAJACQAAAAAAAAAAAAAAKQBAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAXAIAAAAA
     file_cachedStartup: {fileID: 0}
     cacheStartup: 0
   showNavGraphs: 1
@@ -10952,11 +10997,11 @@ MonoBehaviour:
   - 29
   - 30
   - 31
-  heuristic: 2
+  heuristic: 0
   heuristicScale: 1
   threadCount: 1
   maxFrameTime: 10
-  batchGraphUpdates: 0
+  batchGraphUpdates: 1
   graphUpdateBatchingInterval: 0.2
   navmeshUpdates:
     updateInterval: 0
@@ -38856,3 +38901,4 @@ SceneRoots:
   - {fileID: 1766471564}
   - {fileID: 2082879657}
   - {fileID: 1034400403}
+  - {fileID: 763122603}

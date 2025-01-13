@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3484950915480888125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3566396082306530278}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3566396082306530278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484950915480888125}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -2.4400005, y: 0, z: 1.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8413119213411701891}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7029840998004697894
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,12 +620,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304287139422427550}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -22.581573, y: -56.983105, z: 11.949638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7029840998004668174}
+  - {fileID: 3566396082306530278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1417652794373418011
@@ -729,15 +761,16 @@ MonoBehaviour:
   currentShowState: 0
   currentDrivertype: 1
   detectionRange: 15
-  _currentSpeed: 6
-  _slowDownSpeed: 0.5
+  currentSpeed: 6
+  slowDownSpeed: 0.1
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
+  _slowDownDuration: 2
+  _overTakingPos: {fileID: 3566396082306530278}
+  _endOverTakingPos: {fileID: 0}
   isOvertaking: 0
-  slowDownDuration: 2
   currentTarget: {fileID: 0}
-  aiPath: {fileID: 0}
 --- !u!114 &3248917020107323649
 MonoBehaviour:
   m_ObjectHideFlags: 0

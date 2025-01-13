@@ -594,6 +594,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 256250377750248746}
+  - {fileID: 303231416366924442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3342649645493635343
@@ -728,15 +729,16 @@ MonoBehaviour:
   currentShowState: 0
   currentDrivertype: 1
   detectionRange: 15
-  _currentSpeed: 6
-  _slowDownSpeed: 0.5
+  currentSpeed: 6
+  slowDownSpeed: 0.1
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
+  _slowDownDuration: 2
+  _overTakingPos: {fileID: 303231416366924442}
+  _endOverTakingPos: {fileID: 0}
   isOvertaking: 0
-  slowDownDuration: 2
   currentTarget: {fileID: 0}
-  aiPath: {fileID: 0}
 --- !u!114 &7995405065811099566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,3 +781,34 @@ MonoBehaviour:
   learningRate: 0.1
   discountFactor: 0.9
   currentSegment: {fileID: 0}
+--- !u!1 &9111001586520394356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 303231416366924442}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &303231416366924442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111001586520394356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.38268343, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: -2.4400005, y: 0, z: 1.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3654445959103807031}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

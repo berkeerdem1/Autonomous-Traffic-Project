@@ -35,6 +35,8 @@ public class Car_State_Machine : MonoBehaviour
     [SerializeField] private float _normalSpeed = 6f;
     [SerializeField] private float _chillSpeed = 3f;
     [SerializeField] private float _slowDownDuration = 2f;
+    public Transform _overTakingPos;
+    [SerializeField] private Transform _endOverTakingPos;
     private float _slowDownTimer = 0f;
     private float _initialSpeed;
 
@@ -68,6 +70,8 @@ public class Car_State_Machine : MonoBehaviour
         StartCoroutine(DelayedFind());
         RandomDriver();
 
+        InvokeRepeating("IsCarInFront()", 0f, 0.2f);
+
         switchState(waitState);
     }
 
@@ -79,10 +83,6 @@ public class Car_State_Machine : MonoBehaviour
     private void FixedUpdate()
     {
         currentstate.fixedUpdateState(this);
-
-        CarInFrontControl();
-        AvoidCollision();
-
         _aiPath.maxSpeed = currentSpeed;
     }
 
@@ -179,7 +179,7 @@ public class Car_State_Machine : MonoBehaviour
             Debug.LogError($"NullReferenceException in left lane: {ex.Message}");
         }
 
-        _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
+       // _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
         _aiPath.canSearch = true; 
 
         if (_trafficAI != null) _trafficAI.SetTarget(currentTarget);
@@ -187,7 +187,8 @@ public class Car_State_Machine : MonoBehaviour
 
     public void ChangeTarget()
     {
-        List<Transform> currentLane = _isOnRightLane ? _rightLanePoints : _leftLanePoints;
+        //List<Transform> currentLane = _isOnRightLane ? _rightLanePoints : _leftLanePoints;
+        List<Transform> currentLane = _rightLanePoints;
         Transform closestPoint = FindClosestPoint(currentLane);
 
         int currentIndex = currentLane.IndexOf(closestPoint);
@@ -216,7 +217,7 @@ public class Car_State_Machine : MonoBehaviour
         {
             if (_distanceToCar < 6f) 
             {
-                //switchState(stopState);
+                switchState(stopState);
 
                 if(_isAngryDriver)
                     switchState(overTakingState);
@@ -294,40 +295,40 @@ public class Car_State_Machine : MonoBehaviour
         return false;
     } 
 
-    private Transform FindAlternativePoint()
-    {
-        List<Transform> alternativePoints = currentLane == Lane.Right ? _leftLanePoints : _rightLanePoints;
-        return FindClosestPoint(alternativePoints);
-    }
 
-    private void AvoidCollision()
+    public IEnumerator StartOvertaking()
     {
-        if (IsCarInFront())
+        float timer = 0f;
+        while (timer <= 2f)
         {
-            Transform alternativePoint = FindAlternativePoint();
-
-            if (alternativePoint != null)
-            {
-                _aiPath.destination = alternativePoint.position;
-                currentLane = currentLane == Lane.Right ? Lane.Left : Lane.Right;
-            }
+            timer += Time.deltaTime;
+            transform.position = transform.position + (transform.right * -0.02f);
+            transform.position = transform.position + (transform.forward * + 0.1f);
+            yield return null;
         }
-    }
-
-    public void StartOvertaking()
-    {
+        float elapsedTime = 0f;
+        while (elapsedTime <= 1f)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.position = transform.position + (transform.forward * + 0.3f);
+            yield return null;
+        }
         isOvertaking = true;
 
-        _overtakePoint = FindClosestPoint(_leftLanePoints);
+        //_overtakePoint = FindClosestPoint(_leftLanePoints);
 
-        if (_overtakePoint != null)
-        {
-            _aiPath.destination = _overtakePoint.position; 
-        }
+        //if (_overtakePoint != null)
+        //{
+        //    _aiPath.destination = _overtakePoint.position; 
+        //}
     } // Start Overtaking using FindClosestPoint(LeftLanePoints)
     public void EndOvertaking()
     {
+        Vector3 overTakingPos = transform.position + (transform.right * 5);
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         isOvertaking = false;
+
+        //transform.position = _endOverTakingPos.position;
 
         Transform returnPoint = FindClosestPoint(_rightLanePoints);
 
