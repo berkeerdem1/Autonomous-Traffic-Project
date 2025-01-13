@@ -23,7 +23,6 @@ public class OneWayRoads : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-
         var graph = AstarPath.active.data.pointGraph;
 
         for (int i = 0; i < graph.nodes.Length; i++)

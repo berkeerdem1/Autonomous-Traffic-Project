@@ -21,6 +21,13 @@ public class Car_State_Machine : MonoBehaviour
     public DriverType currentDrivertype = DriverType.normal;
     private Lane currentLane = Lane.Right;
 
+    private Dictionary<DriverType, int> weights = new Dictionary<DriverType, int>
+    {
+        { DriverType.angry, 1 },  
+        { DriverType.normal, 5 },  
+        { DriverType.chill, 10 }      
+    };
+
     [Header("LISTS")]
     private List<Transform> _rightLanePoints = new List<Transform>();
     private List<Transform> _leftLanePoints = new List<Transform>();  
@@ -42,7 +49,6 @@ public class Car_State_Machine : MonoBehaviour
 
 
     [Header("BOOLS")]
-    public bool isOvertaking = false; 
     private bool _isOnRightLane = true;
     private float _distanceToCar;
     private bool _isAngryDriver = false;
@@ -68,8 +74,7 @@ public class Car_State_Machine : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayedFind());
-        RandomDriver();
-
+        currentDrivertype = GetWeightedRandomDriverType();
         InvokeRepeating("IsCarInFront()", 0f, 0.2f);
 
         switchState(waitState);
@@ -86,11 +91,27 @@ public class Car_State_Machine : MonoBehaviour
         _aiPath.maxSpeed = currentSpeed;
     }
 
-    void RandomDriver()
+    private DriverType GetWeightedRandomDriverType()
     {
-        DriverType[] drivertypes = (DriverType[])System.Enum.GetValues(typeof(DriverType));
-        int random = UnityEngine.Random.Range(0, drivertypes.Length);
-        currentDrivertype = drivertypes[random];
+        int totalWeight = 0;
+        foreach (var weight in weights.Values)
+        {
+            totalWeight += weight;
+        }
+
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        foreach (var pair in weights)
+        {
+            currentWeight += pair.Value;
+            if (randomValue < currentWeight)
+            {
+                return pair.Key;
+            }
+        }
+
+        return default;
     }
 
     public void DriverStateControl()
@@ -299,6 +320,7 @@ public class Car_State_Machine : MonoBehaviour
     public IEnumerator StartOvertaking()
     {
         float timer = 0f;
+
         while (timer <= 2f)
         {
             timer += Time.deltaTime;
@@ -306,36 +328,21 @@ public class Car_State_Machine : MonoBehaviour
             transform.position = transform.position + (transform.forward * + 0.1f);
             yield return null;
         }
+
         float elapsedTime = 0f;
+
         while (elapsedTime <= 1f)
         {
             elapsedTime += Time.deltaTime;
-            transform.position = transform.position + (transform.forward * + 0.3f);
+            transform.position = transform.position + (transform.forward * + 0.25f);
             yield return null;
         }
-        isOvertaking = true;
 
-        //_overtakePoint = FindClosestPoint(_leftLanePoints);
-
-        //if (_overtakePoint != null)
-        //{
-        //    _aiPath.destination = _overtakePoint.position; 
-        //}
     } // Start Overtaking using FindClosestPoint(LeftLanePoints)
     public void EndOvertaking()
     {
         Vector3 overTakingPos = transform.position + (transform.right * 5);
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        isOvertaking = false;
-
-        //transform.position = _endOverTakingPos.position;
-
-        Transform returnPoint = FindClosestPoint(_rightLanePoints);
-
-        if (returnPoint != null)
-        {
-            _aiPath.destination = returnPoint.position; 
-        }
     } // End Overtaking using FindClosestPoint(RightLanePoints)
 
     public Transform GetTarget()
