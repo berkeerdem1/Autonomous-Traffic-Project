@@ -42,14 +42,14 @@ public class Car_State_Machine : MonoBehaviour
     [SerializeField] private float _normalSpeed = 6f;
     [SerializeField] private float _chillSpeed = 3f;
     [SerializeField] private float _slowDownDuration = 2f;
-    private float _slowDownTimer = 0f;
     private float _initialSpeed;
 
     [Header("RAY")]
     [SerializeField] private Transform _rayPoint;
     [SerializeField] private float _rayDistance = 10f; 
     [SerializeField] private int _rayCount = 10;     
-    [SerializeField] private float _spreadAngle = 45f; 
+    [SerializeField] private float _spreadAngle = 45f;
+    private GameObject _detectedCar;
 
     [Header("BOOLS")]
     private bool _isOnRightLane = true;
@@ -168,7 +168,7 @@ public class Car_State_Machine : MonoBehaviour
         GameObject[] rightLaneWithTag = Object_Pool.Instance.GetRightLinesWithTag();
         GameObject[] lefttLaneWithTag = Object_Pool.Instance.GeteftLinesWithTag();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
 
         foreach (GameObject obj in targetWithTag)
         {
@@ -218,7 +218,7 @@ public class Car_State_Machine : MonoBehaviour
         int currentIndex = currentLane.IndexOf(closestPoint);
         float disToTarget = Vector2.Distance(currentTarget.position, transform.position);
 
-        if (disToTarget <= 2f)
+        if (disToTarget <= 3f)
         {
             int newIndex = currentIndex - 2;
 
@@ -317,6 +317,7 @@ public class Car_State_Machine : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Car"))
                 {
+                    SetCar(hit.collider.gameObject);
                     Debug.DrawLine(origin, hit.point, Color.red);
                     _distanceToCar = Vector3.Distance(transform.position, hit.point);
                     return true;
@@ -344,8 +345,24 @@ public class Car_State_Machine : MonoBehaviour
 
         //Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.green);
         //return false;
-    } 
+    }
 
+    private void SetCar(GameObject car)
+    {
+        _detectedCar = car;
+    }
+
+    public GameObject GetCar()
+    {
+        return _detectedCar;
+    }
+
+    public IEnumerator CarDetectedCoroutine(GameObject carObject)
+    {
+        carObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        carObject.SetActive(true);
+    }
 
     public IEnumerator StartOvertaking()
     {

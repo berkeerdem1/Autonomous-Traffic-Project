@@ -668,15 +668,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentShowState: 0
   currentDrivertype: 1
-  detectionRange: 15
   currentSpeed: 6
   slowDownSpeed: 0.1
   _angrySpeed: 12
   _normalSpeed: 6
   _chillSpeed: 3
   _slowDownDuration: 2
-  _overTakingPos: {fileID: 495802603296509450}
-  _endOverTakingPos: {fileID: 0}
   _rayPoint: {fileID: 6991635640799571190}
   _rayDistance: 15
   _rayCount: 10
@@ -749,7 +746,7 @@ Transform:
   m_GameObject: {fileID: 9034846613205336480}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.13}
+  m_LocalPosition: {x: 0, y: 0.47, z: 3.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
