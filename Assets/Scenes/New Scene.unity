@@ -2498,7 +2498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &262916315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6789,9 +6789,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 702257959}
+  - component: {fileID: 702257960}
   m_Layer: 0
   m_Name: Way 3
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6823,6 +6824,47 @@ Transform:
   - {fileID: 1946923228}
   m_Father: {fileID: 886072370}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &702257960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702257958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3747b4eda8e15349a9c0f030b9ef358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointLists:
+  - {fileID: 1191885686}
+  - {fileID: 819704692}
+  - {fileID: 951493448}
+  - {fileID: 917314991}
+  - {fileID: 1336348710}
+  - {fileID: 863461953}
+  - {fileID: 1136244098}
+  - {fileID: 608937753}
+  - {fileID: 707449028}
+  - {fileID: 1928350152}
+  - {fileID: 198023956}
+  - {fileID: 373491076}
+  - {fileID: 1005354464}
+  - {fileID: 402511659}
+  - {fileID: 1957509080}
+  - {fileID: 1835535693}
+  - {fileID: 600964496}
+  - {fileID: 337569190}
+  - {fileID: 222467022}
+  - {fileID: 485114795}
+  - {fileID: 1722427996}
+  - {fileID: 685122163}
+  - {fileID: 2129521297}
+  - {fileID: 1979811708}
+  - {fileID: 483024653}
+  - {fileID: 511246998}
+  - {fileID: 1205462957}
+  - {fileID: 1148574357}
 --- !u!1 &704362855
 GameObject:
   m_ObjectHideFlags: 0
@@ -9018,9 +9060,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 920663170}
+  - component: {fileID: 920663171}
   m_Layer: 0
   m_Name: Way 1
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9052,6 +9095,44 @@ Transform:
   - {fileID: 1740843639}
   m_Father: {fileID: 886072370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &920663171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920663169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3747b4eda8e15349a9c0f030b9ef358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointLists:
+  - {fileID: 1468618708}
+  - {fileID: 284418588}
+  - {fileID: 1567578664}
+  - {fileID: 1032043628}
+  - {fileID: 573052165}
+  - {fileID: 1585609332}
+  - {fileID: 1201992962}
+  - {fileID: 1463353780}
+  - {fileID: 1812073094}
+  - {fileID: 1878972463}
+  - {fileID: 370197415}
+  - {fileID: 925996577}
+  - {fileID: 1556686764}
+  - {fileID: 137458141}
+  - {fileID: 1437023862}
+  - {fileID: 124101267}
+  - {fileID: 1374727051}
+  - {fileID: 91948548}
+  - {fileID: 1471194136}
+  - {fileID: 1975804151}
+  - {fileID: 516510421}
+  - {fileID: 1339275588}
+  - {fileID: 57947206}
+  - {fileID: 316614461}
+  - {fileID: 1501628741}
 --- !u!1 &925996576
 GameObject:
   m_ObjectHideFlags: 0
@@ -11044,9 +11125,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076243748}
+  - component: {fileID: 1076243749}
   m_Layer: 0
   m_Name: Way 2
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11078,6 +11160,46 @@ Transform:
   - {fileID: 939515634}
   m_Father: {fileID: 886072370}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1076243749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076243747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3747b4eda8e15349a9c0f030b9ef358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointLists:
+  - {fileID: 1945963243}
+  - {fileID: 840529401}
+  - {fileID: 1803061142}
+  - {fileID: 1674611401}
+  - {fileID: 1216423070}
+  - {fileID: 1254256454}
+  - {fileID: 1277722903}
+  - {fileID: 1058184473}
+  - {fileID: 1251543828}
+  - {fileID: 359822286}
+  - {fileID: 853025343}
+  - {fileID: 1219995962}
+  - {fileID: 1984245295}
+  - {fileID: 1901775603}
+  - {fileID: 388871959}
+  - {fileID: 1054868875}
+  - {fileID: 1699502726}
+  - {fileID: 1453721344}
+  - {fileID: 1806195090}
+  - {fileID: 1179886739}
+  - {fileID: 861935410}
+  - {fileID: 2084053355}
+  - {fileID: 1120793451}
+  - {fileID: 232723261}
+  - {fileID: 1793371747}
+  - {fileID: 818004313}
+  - {fileID: 847225922}
 --- !u!1 &1093927543
 GameObject:
   m_ObjectHideFlags: 0
@@ -16715,9 +16837,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781742917}
+  - component: {fileID: 1781742918}
   m_Layer: 0
   m_Name: Way 4
-  m_TagString: Untagged
+  m_TagString: Road
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16749,6 +16872,43 @@ Transform:
   - {fileID: 1786915179}
   m_Father: {fileID: 886072370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1781742918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781742916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3747b4eda8e15349a9c0f030b9ef358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointLists:
+  - {fileID: 1113498622}
+  - {fileID: 1057819652}
+  - {fileID: 205682958}
+  - {fileID: 485429119}
+  - {fileID: 822926469}
+  - {fileID: 1343473708}
+  - {fileID: 401158367}
+  - {fileID: 756030401}
+  - {fileID: 20715614}
+  - {fileID: 2059906912}
+  - {fileID: 1969878338}
+  - {fileID: 1725516602}
+  - {fileID: 1656957027}
+  - {fileID: 1368114503}
+  - {fileID: 1739489715}
+  - {fileID: 722854259}
+  - {fileID: 1306514570}
+  - {fileID: 2051640155}
+  - {fileID: 1549927073}
+  - {fileID: 850034881}
+  - {fileID: 1181624812}
+  - {fileID: 339105642}
+  - {fileID: 2129795736}
+  - {fileID: 704362856}
 --- !u!1 &1783030554
 GameObject:
   m_ObjectHideFlags: 0

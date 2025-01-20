@@ -32,6 +32,7 @@ public class Car_State_Machine : MonoBehaviour
     private List<Transform> _rightLanePoints = new List<Transform>();
     private List<Transform> _leftLanePoints = new List<Transform>();  
     private List<Transform> _targets = new List<Transform>();
+    private List<Transform> _roadList = new List<Transform>();
 
 
     [Header("MOVEMENT SETTINGS")]
@@ -160,8 +161,14 @@ public class Car_State_Machine : MonoBehaviour
         GameObject[] targetWithTag = Object_Pool.Instance.GetTargets();
         GameObject[] rightLaneWithTag = Object_Pool.Instance.GetRightLinesWithTag();
         GameObject[] lefttLaneWithTag = Object_Pool.Instance.GeteftLinesWithTag();
+        GameObject[] roadsWithTag = Object_Pool.Instance.GetRoads();
 
         yield return new WaitForSeconds(0.05f);
+
+        foreach (GameObject obj in roadsWithTag)
+        {
+            _roadList.Add(obj.transform);
+        }
 
         foreach (GameObject obj in targetWithTag)
         {
@@ -192,8 +199,11 @@ public class Car_State_Machine : MonoBehaviour
             Debug.LogError($"NullReferenceException in left lane: {ex.Message}");
         }
 
-        int randomTargetIndex = UnityEngine.Random.Range(0, _rightLanePoints.Count);
-        currentTarget= _rightLanePoints[randomTargetIndex];
+        List<Transform> currentRoad = _roadList;
+        FindClosestRoad(currentRoad);
+
+        int randomTargetIndex = UnityEngine.Random.Range(0, FindClosestRoad(currentRoad).GetComponent<Roads>().GetPoints().Count);
+        currentTarget = FindClosestRoad(currentRoad).GetComponent<Roads>().GetPoints()[randomTargetIndex];
         _aiPath.destination = currentTarget.position;
 
         // _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
@@ -254,6 +264,33 @@ public class Car_State_Machine : MonoBehaviour
             _aiPath.maxSpeed = currentSpeed;
             //switchState(movementState);
         }
+    }
+
+    private Transform FindClosestRoad(List<Transform> roads)
+    {
+        Vector3[] positions = roads.Select(p => p.position).ToArray();
+        Vector3 currentPosition = transform.position;
+
+        int closestIndex = -1;
+        float minDistance = Mathf.Infinity;
+
+        // Splits processes independently and runs
+        // these parts simultaneously on multiple processors
+        // Use parallel processing just for distance calculation
+        System.Threading.Tasks.Parallel.For(0, positions.Length, i =>
+        {
+            float distance = Vector3.Distance(currentPosition, positions[i]);
+            lock (this)
+            {
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestIndex = i;
+                }
+            }
+        });
+
+        return closestIndex >= 0 ? roads[closestIndex] : null;
     }
 
     private Transform FindClosestPoint(List<Transform> points)
