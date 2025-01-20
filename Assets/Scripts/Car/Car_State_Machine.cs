@@ -213,7 +213,7 @@ public class Car_State_Machine : MonoBehaviour
     public void ChangeTarget()
     {
         //List<Transform> currentLane = _isOnRightLane ? _rightLanePoints : _leftLanePoints;
-        List<Transform> currentLane = _rightLanePoints;
+        List<Transform> currentLane = FindClosestRoad(_roadList).GetComponent<Roads>().GetPoints();
         Transform closestPoint = FindClosestPoint(currentLane);
 
         int currentIndex = currentLane.IndexOf(closestPoint);
@@ -225,11 +225,12 @@ public class Car_State_Machine : MonoBehaviour
 
             if (newIndex < 0)
             {
-                newIndex = currentLane.Count - 1; // Loop
+                newIndex += currentLane.Count;
             }
 
             currentTarget = currentLane[newIndex];
-            _isOnRightLane = !_isOnRightLane; 
+
+            _isOnRightLane = !_isOnRightLane;
         }
 
         //var node = AstarPath.active.GetNearest(transform.position).node;
