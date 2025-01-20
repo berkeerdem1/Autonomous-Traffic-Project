@@ -12,8 +12,6 @@ public class OneWayRoads : MonoBehaviour
     /// </summary>
     /// 
 
-    public List<Transform> points = new List<Transform>();
-
     void Awake()
     {
         StartCoroutine(wait());
