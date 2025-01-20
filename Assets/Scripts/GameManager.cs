@@ -6,7 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class Road
 {
-    public Transform target; 
+    public Transform target;
+    public Transform NewTarget;
     public List<Transform> cars; 
 }
 
@@ -89,7 +90,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Transform newTarget = roads[toRoad].target;
+        //Transform newTarget = roads[toRoad].target;
+        Transform newTarget = roads[toRoad].NewTarget;
 
         foreach (var car in randomCars)
         {

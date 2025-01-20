@@ -62,17 +62,10 @@ public class Car_State_Machine : MonoBehaviour
     private AIPath _aiPath;
     private Transform _overtakePoint;
     private AIDestinationSetter _destinationSetter;
-    private Traffic_AI _trafficAI;
-
     private void Awake()
     {
         _destinationSetter = GetComponent<AIDestinationSetter>();
         _aiPath = GetComponent<AIPath>();
-        _trafficAI = GetComponent<Traffic_AI>();
-    }
-    private void OnEnable()
-    {
-        
     }
     void Start()
     {
@@ -175,10 +168,6 @@ public class Car_State_Machine : MonoBehaviour
             _targets.Add(obj.transform);
         }
 
-        int randomTargetIndex = UnityEngine.Random.Range(0, _targets.Count);
-        currentTarget = _targets[randomTargetIndex];
-        _aiPath.destination = currentTarget.position;
-
         try
         {
             foreach (GameObject obj in rightLaneWithTag)
@@ -203,10 +192,12 @@ public class Car_State_Machine : MonoBehaviour
             Debug.LogError($"NullReferenceException in left lane: {ex.Message}");
         }
 
-       // _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
-        _aiPath.canSearch = true; 
+        int randomTargetIndex = UnityEngine.Random.Range(0, _rightLanePoints.Count);
+        currentTarget= _rightLanePoints[randomTargetIndex];
+        _aiPath.destination = currentTarget.position;
 
-        if (_trafficAI != null) _trafficAI.SetTarget(currentTarget);
+        // _aiPath.destination = FindClosestPoint(_rightLanePoints).position;
+        _aiPath.canSearch = true; 
     } // It pulls the necessary references from the ready Object Pool into its lists
 
     public void ChangeTarget()
@@ -220,14 +211,14 @@ public class Car_State_Machine : MonoBehaviour
 
         if (disToTarget <= 3f)
         {
-            int newIndex = currentIndex - 2;
+            int newIndex = currentIndex - 1;
 
             if (newIndex < 0)
             {
                 newIndex = currentLane.Count - 1; // Loop
             }
 
-            currentTarget.position = currentLane[newIndex].position;
+            currentTarget = currentLane[newIndex];
             _isOnRightLane = !_isOnRightLane; 
         }
 
