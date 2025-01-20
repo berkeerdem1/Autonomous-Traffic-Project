@@ -39,6 +39,7 @@ Transform:
   m_Children:
   - {fileID: 2656389635696935282}
   - {fileID: 1828698263404270740}
+  - {fileID: 7605923328204463467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1953151723942726041
@@ -181,7 +182,10 @@ MonoBehaviour:
   _slowDownDuration: 2
   _overTakingPos: {fileID: 1828698263404270740}
   _endOverTakingPos: {fileID: 0}
-  isOvertaking: 0
+  _rayPoint: {fileID: 7605923328204463467}
+  _rayDistance: 15
+  _rayCount: 10
+  _spreadAngle: 45
   currentTarget: {fileID: 0}
 --- !u!114 &3468344008568621848
 MonoBehaviour:
@@ -225,6 +229,37 @@ MonoBehaviour:
   learningRate: 0.1
   discountFactor: 0.9
   currentSegment: {fileID: 0}
+--- !u!1 &1792953344460068741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7605923328204463467}
+  m_Layer: 0
+  m_Name: Ray Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7605923328204463467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792953344460068741}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8963425127300327629}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2656389635696496290
 GameObject:
   m_ObjectHideFlags: 0

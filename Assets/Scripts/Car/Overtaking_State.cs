@@ -8,9 +8,9 @@ public class Overtaking_State : Car_Base
     {
         car.currentShowState = Car_State_Machine.States.overtaking;
 
-        car.transform.LookAt(car._overTakingPos);
-        car.StartCoroutine(car.StartOvertaking());
-        car.StartCoroutine(Wait());
+        //car.transform.LookAt(car._overTakingPos);
+        //car.StartCoroutine(car.StartOvertaking());
+        //car.StartCoroutine(Wait());
 
         IEnumerator Wait()
         {

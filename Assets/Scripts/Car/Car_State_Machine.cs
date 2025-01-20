@@ -35,18 +35,21 @@ public class Car_State_Machine : MonoBehaviour
 
 
     [Header("MOVEMENT SETTINGS")]
-    public float detectionRange = 10f; // Car detection distance //
+    //public float detectionRange = 10f; // Car detection distance //
     public float currentSpeed = 6f;
     public float slowDownSpeed = 0.1f;
     [SerializeField] private float _angrySpeed = 12f;
     [SerializeField] private float _normalSpeed = 6f;
     [SerializeField] private float _chillSpeed = 3f;
     [SerializeField] private float _slowDownDuration = 2f;
-    public Transform _overTakingPos;
-    [SerializeField] private Transform _endOverTakingPos;
     private float _slowDownTimer = 0f;
     private float _initialSpeed;
 
+    [Header("RAY")]
+    [SerializeField] private Transform _rayPoint;
+    [SerializeField] private float _rayDistance = 10f; 
+    [SerializeField] private int _rayCount = 10;     
+    [SerializeField] private float _spreadAngle = 45f; 
 
     [Header("BOOLS")]
     private bool _isOnRightLane = true;
@@ -215,7 +218,7 @@ public class Car_State_Machine : MonoBehaviour
         int currentIndex = currentLane.IndexOf(closestPoint);
         float disToTarget = Vector2.Distance(currentTarget.position, transform.position);
 
-        if (disToTarget <= 1)
+        if (disToTarget <= 2f)
         {
             int newIndex = currentIndex - 2;
 
@@ -240,8 +243,8 @@ public class Car_State_Machine : MonoBehaviour
             {
                 switchState(stopState);
 
-                if(_isAngryDriver)
-                    switchState(overTakingState);
+                //if(_isAngryDriver)
+                //    switchState(overTakingState);
             }
             else
             {
@@ -298,22 +301,49 @@ public class Car_State_Machine : MonoBehaviour
         // It sends a raycast from the front point and if 
         // it touches an object with the 'car' tag, 
         // it returns true and calculates the distance to the object.
-
+        Vector3 origin = _rayPoint.position;
+        Vector3 forward = _rayPoint.forward;
         RaycastHit hit;
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
 
-        if (Physics.Raycast(rayOrigin, transform.forward, out hit, detectionRange))
+        float halfSpread = _spreadAngle / 2;
+
+        for (int i = 0; i < _rayCount; i++)
         {
-            if (hit.collider.CompareTag("Car"))
+            float angle = Mathf.Lerp(-halfSpread, halfSpread, (float)i / (_rayCount - 1));
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+            Vector3 direction = rotation * forward;
+
+            if (Physics.Raycast(origin, direction, out hit, _rayDistance))
             {
-                Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.red);
-                _distanceToCar = Vector3.Distance(transform.position, hit.point);
-                return true;
+                if (hit.collider.CompareTag("Car"))
+                {
+                    Debug.DrawLine(origin, hit.point, Color.red);
+                    _distanceToCar = Vector3.Distance(transform.position, hit.point);
+                    return true;
+                }
+            }
+            else
+            {
+                Debug.DrawRay(origin, direction * _rayDistance, Color.green); 
             }
         }
-
-        Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.green);
         return false;
+
+        //RaycastHit hit;
+        //Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
+
+        //if (Physics.Raycast(rayOrigin, transform.forward, out hit, detectionRange))
+        //{
+        //    if (hit.collider.CompareTag("Car"))
+        //    {
+        //        Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.red);
+        //        _distanceToCar = Vector3.Distance(transform.position, hit.point);
+        //        return true;
+        //    }
+        //}
+
+        //Debug.DrawRay(rayOrigin, transform.forward * detectionRange, Color.green);
+        //return false;
     } 
 
 

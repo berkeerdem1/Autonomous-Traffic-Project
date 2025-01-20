@@ -12,7 +12,8 @@ public class Stop_State : Car_Base
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(3f);
-            car.switchState(car.overTakingState);
+            //car.switchState(car.overTakingState);
+            car.switchState(car.movementState);
         }
     }
 
