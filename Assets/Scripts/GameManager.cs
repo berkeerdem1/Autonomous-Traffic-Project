@@ -7,7 +7,6 @@ using UnityEngine;
 public class Road
 {
     public Transform target;
-    public Transform NewTarget;
     public List<Transform> cars; 
 }
 
@@ -77,6 +76,7 @@ public class GameManager : MonoBehaviour
     private void RedirectCars(int fromRoad, int toRoad)
     {
         List<Transform> carsOnRoad = roads[fromRoad].cars;
+
         int carsToRedirect = Mathf.Min(2, carsOnRoad.Count); 
         List<Transform> randomCars = new List<Transform>();
 
@@ -90,12 +90,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //Transform newTarget = roads[toRoad].target;
-        Transform newTarget = roads[toRoad].NewTarget;
-
+        Transform newTarget = roads[toRoad].target;
         foreach (var car in randomCars)
         {
             car.GetComponent<Car_State_Machine>().currentTarget = newTarget;
+            car.GetComponent<Car_State_Machine>().switchState(car.GetComponent<Car_State_Machine>().junctionState);
         }
     }
 }

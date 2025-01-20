@@ -15,6 +15,7 @@ public class Car_State_Machine : MonoBehaviour
     public Movement_State movementState = new Movement_State();
     public Stop_State stopState = new Stop_State();
     public Overtaking_State overTakingState = new Overtaking_State();
+    public Junction_State junctionState = new Junction_State();
 
     [Header("ENUMS")]
     public States currentShowState = States.movement;
@@ -73,7 +74,6 @@ public class Car_State_Machine : MonoBehaviour
         StartCoroutine(DelayedFind());
         currentDrivertype = GetWeightedRandomDriverType();
         InvokeRepeating("IsCarInFront()", 0f, 0.2f);
-
         switchState(waitState);
     }
 
@@ -221,7 +221,7 @@ public class Car_State_Machine : MonoBehaviour
 
         if (disToTarget <= 3f)
         {
-            int newIndex = currentIndex - 1;
+            int newIndex = currentIndex - 2;
 
             if (newIndex < 0)
             {
@@ -236,6 +236,7 @@ public class Car_State_Machine : MonoBehaviour
         //var node = AstarPath.active.GetNearest(transform.position).node;
         //node.Walkable = false; 
     } // If it reaches the target, move the target back 2 points.
+
 
     public void CarInFrontControl()
     {
@@ -292,6 +293,7 @@ public class Car_State_Machine : MonoBehaviour
         });
 
         return closestIndex >= 0 ? roads[closestIndex] : null;
+
     }
 
     private Transform FindClosestPoint(List<Transform> points)
@@ -443,7 +445,8 @@ public class Car_State_Machine : MonoBehaviour
         wait,
         movement,
         stop,
-        overtaking
+        overtaking,
+        junction
     } // (States show on inspector)
     public enum DriverType
     {
